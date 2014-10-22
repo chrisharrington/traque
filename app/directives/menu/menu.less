@@ -1,0 +1,15 @@
+@import "../../style/variables.less";
+@import "../../style/mixins.less";
+
+menu { margin:0; padding:0; position:absolute; z-index:2; top:@header-height; left:0; background:#333; height:150px; width:300px; padding:@spacing; color:#EEE;
+	>div.user { float:left;
+		@logo-width:50px;
+		>profile-image { float:left; width:43px; height:43px;
+			>img { .border-radius(50%); }
+		}
+		>div.info { float:left; width:calc(~"100% - 50px"); padding-left:@spacing; .border-box; 
+			>span { float:left; width:100%; line-height:auto; }
+			>span.email { font-size:0.75em; color:#BBB; }
+		}
+	}
+}
