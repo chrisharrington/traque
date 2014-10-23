@@ -19,12 +19,12 @@
 	</head>
 	<body>
 		<header>
-			<div class="menu-trigger" ng-click="$root.show = true;">
+			<div class="menu-trigger" ng-click="$root.menuVisible = true;">
 				<i class="fa fa-bars"></i>
 				<span>T</span>
 			</div>
 		</header>
-        <menu ng-class="{ show: show }"></menu>
+        <menu trigger="menu-trigger" visible="$root.menuVisible"></menu>
 		<section class="content-container" ng-view></section>
 	</body>
 </html>

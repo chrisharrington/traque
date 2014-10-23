@@ -1,0 +1,11 @@
+@import "../../style/variables.less";
+@import "../../style/mixins.less";
+
+@height:20px;
+menu-item { display:block; cursor:pointer;
+	>a { float:left; width:100%; color:inherit;
+		>i, >span { float:left; .vertical-centre(@height); color:inherit; }
+		>span { margin-left:@spacing; }
+		>i { width:22px; text-align:center; }
+	}
+}

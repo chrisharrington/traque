@@ -1712,14 +1712,15 @@
 menu {
   margin: 0;
   padding: 0;
+}
+menu > div {
   position: fixed;
   z-index: 2;
   top: 50px;
   left: 0;
-  background: #333;
+  background: #333333;
   height: calc(100% - 60px);
   width: 300px;
-  padding: 12px;
   color: #EEE;
   -webkit-transition: transform ease 250ms;
   -moz-transition: transform ease 250ms;
@@ -1737,39 +1738,118 @@ menu {
   -o-transform: translate3d(-100%, 0, 0);
   -moz-transform: translate3d(-100%, 0, 0);
 }
-menu.show {
+menu > div.show {
   transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
   -webkit-transform: translate3d(0, 0, 0);
   -o-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
 }
-menu > div.user {
+menu > div > div.user {
   float: left;
+  padding: 12px;
+  cursor: pointer;
 }
-menu > div.user > profile-image {
+menu > div > div.user > profile-image {
   float: left;
   width: 43px;
   height: 43px;
 }
-menu > div.user > profile-image > img {
+menu > div > div.user > profile-image > img {
   border-radius: 50%;
 }
-menu > div.user > div.info {
+menu > div > div.user > div.info {
   float: left;
   width: calc(100% - 50px);
   padding-left: 12px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
-menu > div.user > div.info > span {
+menu > div > div.user > div.info > span {
   float: left;
   width: 100%;
-  line-height: auto;
 }
-menu > div.user > div.info > span.email {
+menu > div > div.user > div.info > span.email {
   font-size: 0.75em;
-  color: #BBB;
+  color: #bbbbbb;
+}
+menu > div > menu-item {
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  display: block;
+  padding: 12px;
+  color: #bbbbbb;
+}
+menu > div > div.user:hover,
+menu > div > menu-item:hover {
+  background: #404040;
+  color: white;
+}
+
+.shadow {
+  box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
+}
+.dark-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.border {
+  border: solid 1px #aaaaaa;
+}
+.border-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hidden {
+  display: none !important;
+}
+.tile {
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
+  border-radius: 2px;
+  background: #ffffff;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.deleted {
+  opacity: 0.6;
+}
+.header-font {
+  font-family: "Roboto Condensed";
+  color: black;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+menu-item {
+  display: block;
+  cursor: pointer;
+}
+menu-item > a {
+  float: left;
+  width: 100%;
+  color: inherit;
+}
+menu-item > a > i,
+menu-item > a > span {
+  float: left;
+  height: 20px;
+  line-height: 20px !important;
+  display: inline-block;
+  vertical-align: middle;
+  color: inherit;
+}
+menu-item > a > span {
+  margin-left: 12px;
+}
+menu-item > a > i {
+  width: 22px;
+  text-align: center;
 }
 
 profile-image > img {
@@ -1855,7 +1935,7 @@ header > div.menu-trigger > i {
   font-size: 24px !important;
   margin-top: 1px;
   height: 50px;
-  line-height: 50px;
+  line-height: 50px !important;
   display: inline-block;
   vertical-align: middle;
 }
@@ -1865,7 +1945,7 @@ header > div.menu-trigger > span {
   font-family: "Droid Serif";
   margin-left: 8px;
   height: 50px;
-  line-height: 50px;
+  line-height: 50px !important;
   display: inline-block;
   vertical-align: middle;
 }

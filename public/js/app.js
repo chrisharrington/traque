@@ -101,14 +101,40 @@ require.register("directives/index", function(exports, require, module) {
 });
 
 ;require.register("directives/menu/menu", function(exports, require, module) {
-app.directive("menu", function() {
+app.directive("menu", function($rootScope) {
 	return {
 		restrict: "E",
 		templateUrl: "directives/menu.html",
+		scope: {
+			trigger: "@",
+			visible: "="
+		},
 		link: function(scope) {
 			scope.name = "Chris Harrington";
 			scope.email = "chrisharrington99@gmail.com";
+			
+			$rootScope.$on("documentClicked", function(inner, target) {
+				if (!_hasClass(target[0], scope.trigger) && !_parentHasClass(target[0], scope.trigger))
+					scope.$apply(function() {
+						scope.visible = false;
+					});
+			});
 		}
+	}
+	
+	function _hasClass(element, className) {
+		return _.contains(element.className.split(" "), className);
+	}
+	
+	function _parentHasClass(element, className) {
+		while (element.parentNode !== null) {
+			if (_hasClass(element, className))
+				return true;
+			
+			element = element.parentNode;
+		}
+		
+		return false;
 	}
 });
 });
@@ -118,7 +144,11 @@ app.directive("menuItem", function() {
     return {
         restrict: "E",
         templateUrl: "directives/menuItem.html",
-        transclude: true
+        transclude: true,
+		scope: {
+			icon: "@",
+			url: "@"
+		}
     };
 });
 });
@@ -148,6 +178,14 @@ app.config(function($routeProvider, $locationProvider) {
 	$routeProvider
 		.when("/test", { templateUrl: "pages/test.html", controller: "test" })
 		.otherwise({ redirectTo: "/test" });
+});
+
+app.run(function($rootScope) {
+	$rootScope.menuVisible = false;
+	
+	angular.element(document).on("click", function(e) {
+		$rootScope.$broadcast("documentClicked", angular.element(e.target));
+	});
 });
 });
 

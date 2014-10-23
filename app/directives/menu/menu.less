@@ -1,16 +1,23 @@
 @import "../../style/variables.less";
 @import "../../style/mixins.less";
 
-menu { margin:0; padding:0; position:fixed; z-index:2; top:@header-height; left:0; background:#333; height:calc(~"100% - 60px"); width:300px; padding:@spacing; color:#EEE; .transition(transform ease @animation-speed); .transform(translate3d(-100%, 0, 0));
-    &.show { .transform(translate3d(0, 0, 0)); }
-	>div.user { float:left;
-		@logo-width:50px;
-		>profile-image { float:left; width:43px; height:43px;
-			>img { .border-radius(50%); }
+@menu-font-colour:#BBB;
+@menu-background-colour:#333;
+
+menu { margin:0; padding:0;
+	>div { position:fixed; z-index:2; top:@header-height; left:0; background:@menu-background-colour; height:calc(~"100% - 60px"); width:300px; color:#EEE; .transition(transform ease @animation-speed); .transform(translate3d(-100%, 0, 0));
+		&.show { .transform(translate3d(0, 0, 0)); }
+		>div.user { float:left; padding:@spacing; cursor:pointer;
+			@logo-width:50px;
+			>profile-image { float:left; width:43px; height:43px;
+				>img { .border-radius(50%); }
+			}
+			>div.info { float:left; width:calc(~"100% - 50px"); padding-left:@spacing; .border-box; 
+				>span { float:left; width:100%; }
+				>span.email { font-size:0.75em; color:@menu-font-colour; }
+			}
 		}
-		>div.info { float:left; width:calc(~"100% - 50px"); padding-left:@spacing; .border-box; 
-			>span { float:left; width:100%; line-height:auto; }
-			>span.email { font-size:0.75em; color:#BBB; }
-		}
+		>menu-item { float:left; width:100%; .border-box; display:block; padding:@spacing; color:@menu-font-colour; }
+		>div.user:hover, >menu-item:hover { background:lighten(@menu-background-colour, 5%); color:white; }
 	}
 }
