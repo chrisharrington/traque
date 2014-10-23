@@ -5,7 +5,7 @@
 @menu-background-colour:#333;
 
 menu { margin:0; padding:0;
-	>div { position:fixed; z-index:2; top:@header-height; left:0; background:@menu-background-colour; height:calc(~"100% - 60px"); width:300px; color:#EEE; .transition(transform ease @animation-speed); .transform(translate3d(-100%, 0, 0));
+	>div { position:fixed; z-index:2; top:@header-height; left:0; background:@menu-background-colour; height:calc(~"100% - 50px"); width:280px; color:#EEE; .transition(transform ease @animation-speed); .transform(translate3d(-100%, 0, 0));
 		&.show { .transform(translate3d(0, 0, 0)); }
 		>div.user { float:left; padding:@spacing; cursor:pointer;
 			@logo-width:50px;

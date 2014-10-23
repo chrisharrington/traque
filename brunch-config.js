@@ -4,7 +4,12 @@ module.exports.config = {
             joinTo: {
                 "js/app.js": /^app/,
                 "js/vendor.js": /^(?!app)/
-            }
+            },
+			order: {
+				before: [
+					"dist/jquery.js"
+				]
+			}
         },
 
         stylesheets: {

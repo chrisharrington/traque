@@ -90,11 +90,49 @@
   globals.require.list = list;
   globals.require.brunch = true;
 })();
+require.register("directives/checkbox/checkbox", function(exports, require, module) {
+app.directive("checkbox", function($sce) {
+	return {
+		restrict: "E",
+		templateUrl: "directives/checkbox.html",
+		transclude: true,
+		scope: {
+			checked: "="
+		},
+		link: function(scope, element, attributes) {
+			scope.info = $sce.trustAsHtml(attributes.info);
+			scope.showing = false;
+			scope.infoVisible = attributes.info && attributes.info != "";
+
+			scope.toggle = function(event) {
+				var target = $(event.target);
+				if (target.hasClass("fa-question") || target.parents("modal").length > 0)
+					return;
+
+				scope.checked = !scope.checked;
+			};
+		}
+	};
+});
+});
+
+require.register("directives/dropdown/dropdown", function(exports, require, module) {
+app.directive("dropdown", function() {
+	return {
+		restrict: "E",
+		templateUrl: "directives/dropdown.html"
+	}
+});
+});
+
 require.register("directives/index", function(exports, require, module) {
 [
     "menu/menu",
     "menu/menuItem",
-    "profileImage/profileImage"
+    "profileImage/profileImage",
+	"dropdown/dropdown",
+	"checkbox/checkbox",
+	"text/text"
 ].forEach(function(location) {
 	require("directives/" + location);
 })
@@ -170,14 +208,41 @@ app.directive("profileImage", function($rootScope, md5) {
 });
 });
 
+require.register("directives/text/text", function(exports, require, module) {
+app.directive("text", function() {
+	return {
+		restrict: "E",
+		templateUrl: "directives/text.html",
+		scope: {
+			type: "@",
+			placeholder: "@",
+			name: "@",
+			tab: "@tabindex",
+			focus: "@",
+			value: "&",
+			ngModel: "="
+		},
+		compile: function(element) {
+			$(element).on("focus", "input", function() {
+				$(element).addClass("focus");
+			});
+
+			$(element).on("blur", "input", function() {
+				$(element).removeClass("focus");
+			});
+		}
+	}
+});
+});
+
 require.register("init", function(exports, require, module) {
 require("pages");
 require("directives");
 
 app.config(function($routeProvider, $locationProvider) {
 	$routeProvider
-		.when("/test", { templateUrl: "pages/test.html", controller: "test" })
-		.otherwise({ redirectTo: "/test" });
+		.when("/timer", { templateUrl: "pages/timer.html", controller: "timer" })
+		.otherwise({ redirectTo: "/timer" });
 });
 
 app.run(function($rootScope) {
@@ -190,14 +255,14 @@ app.run(function($rootScope) {
 });
 
 require.register("pages/index", function(exports, require, module) {
-["test/test"].forEach(function(location) {
+["timer/timer"].forEach(function(location) {
 	require("pages/" + location);
 });
 });
 
-require.register("pages/test/test", function(exports, require, module) {
-app.controller("test", function($scope) {
-	$scope.text = "Hello, world!";
+require.register("pages/timer/timer", function(exports, require, module) {
+app.controller("timer", function() {
+	
 });
 });
 

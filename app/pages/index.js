@@ -1,3 +1,3 @@
-["test/test"].forEach(function(location) {
+["timer/timer"].forEach(function(location) {
 	require("pages/" + location);
 });
