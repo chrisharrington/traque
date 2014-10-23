@@ -4,7 +4,7 @@
     <access origin="*" />
     <author href="https://github.com/chrisharrington">Chris Harrington</author>
     
-    <preference name="phonegap-version" value="3.5.0" />
+    <preference name="phonegap-version" value="3.6.3" />
     <preference name="android-minSdkVersion" value="19" />
     
     <content src="public/index.html" />
