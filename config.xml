@@ -7,5 +7,5 @@
     <preference name="phonegap-version" value="3.6.3" />
     <preference name="android-minSdkVersion" value="19" />
     
-    <content src="public/indexa.html" />
+    <content src="public/root.html" />
 </widget>
