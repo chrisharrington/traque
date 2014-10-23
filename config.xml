@@ -1,0 +1,11 @@
+<widget id="com.traque" version="0.0.1">
+    <name>Traque</name>
+    <description>A tool for tracking time spent on projects.</description>
+    <access origin="*" />
+    <author href="https://github.com/chrisharrington">Chris Harrington</author>
+    
+    <preference name="phonegap-version" value="3.5.0" />
+    <preference name="android-minSdkVersion" value="19" />
+    
+    <content src="public/index.html" />
+</widget>
