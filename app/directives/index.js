@@ -1,3 +1,7 @@
-["menu/menu", "profileImage/profileImage"].forEach(function(location) {
+[
+    "menu/menu",
+    "menu/menuItem",
+    "profileImage/profileImage"
+].forEach(function(location) {
 	require("directives/" + location);
 })

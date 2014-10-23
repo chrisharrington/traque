@@ -91,7 +91,11 @@
   globals.require.brunch = true;
 })();
 require.register("directives/index", function(exports, require, module) {
-["menu/menu", "profileImage/profileImage"].forEach(function(location) {
+[
+    "menu/menu",
+    "menu/menuItem",
+    "profileImage/profileImage"
+].forEach(function(location) {
 	require("directives/" + location);
 })
 });
@@ -106,6 +110,16 @@ app.directive("menu", function() {
 			scope.email = "chrisharrington99@gmail.com";
 		}
 	}
+});
+});
+
+require.register("directives/menu/menuItem", function(exports, require, module) {
+app.directive("menuItem", function() {
+    return {
+        restrict: "E",
+        templateUrl: "directives/menuItem.html",
+        transclude: true
+    };
 });
 });
 
