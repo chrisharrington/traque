@@ -6,7 +6,6 @@
 		<meta name="viewport" content="width=device-width">
 		
 		<title>Traque</title>
-		<base href="/">
 		
 		<link href="http://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans|Roboto+Condensed" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="css/app.css">
@@ -20,12 +19,12 @@
 	</head>
 	<body>
 		<header>
-			<div class="menu-trigger">
+			<div class="menu-trigger" ng-click="$root.show = true;">
 				<i class="fa fa-bars"></i>
 				<span>T</span>
-				<menu></menu>
 			</div>
 		</header>
+        <menu ng-class="{ show: show }"></menu>
 		<section class="content-container" ng-view></section>
 	</body>
 </html>
