@@ -1,0 +1,9 @@
+<div class="overlay" ng-class="{ show: visible, hide: !visible }"></div>
+<div class="content-container" ng-class="{ show: visible }">
+    <h1>{{title}}</h1>
+    <div class="content" ng-transclude></div>
+    <div class="button-container">
+        <button ng-click="ok()" ng-disabled="loading">OK</button>
+        <button ng-click="close()" negative ng-disabled="loading">Cancel</button>
+    </div>
+</div>

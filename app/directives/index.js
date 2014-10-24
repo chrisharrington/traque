@@ -4,7 +4,8 @@
     "profileImage/profileImage",
 	"dropdown/dropdown",
 	"checkbox/checkbox",
-	"text/text"
+	"text/text",
+    "modal/modal"
 ].forEach(function(location) {
 	require("directives/" + location);
 })

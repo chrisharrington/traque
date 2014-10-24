@@ -13,4 +13,9 @@ app.run(function($rootScope) {
 	angular.element(document).on("click", function(e) {
 		$rootScope.$broadcast("documentClicked", angular.element(e.target));
 	});
+    
+    angular.element(document).on("keyup", function(e) {
+        if (e.keyCode === 27)
+		  $rootScope.$broadcast("escapePressed", angular.element(e.target));
+	});
 });

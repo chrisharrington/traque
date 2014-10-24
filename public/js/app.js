@@ -157,7 +157,8 @@ require.register("directives/index", function(exports, require, module) {
     "profileImage/profileImage",
 	"dropdown/dropdown",
 	"checkbox/checkbox",
-	"text/text"
+	"text/text",
+    "modal/modal"
 ].forEach(function(location) {
 	require("directives/" + location);
 })
@@ -200,6 +201,38 @@ app.directive("menuItem", function() {
 			url: "@"
 		}
     };
+});
+});
+
+require.register("directives/modal/modal", function(exports, require, module) {
+app.directive("modal", function($rootScope, $timeout) {
+	return {
+		restrict: "E",
+		templateUrl: "directives/modal.html",
+		transclude: true,
+		scope: {
+			visible: "=",
+			title: "@",
+			loading: "=",
+			ok: "=",
+			cancel: "="
+		},
+		link: function(scope, element, attributes) {
+			scope.close = function() {
+				scope.visible = false;
+				if (scope.cancel !== undefined)
+					scope.cancel();
+			};
+
+			$rootScope.$on("escapePressed", function() {
+				scope.$apply(function() {
+					if (scope.visible === true) {
+						scope.close();
+					}
+				});
+			});
+		}
+	};
 });
 });
 
@@ -263,6 +296,11 @@ app.run(function($rootScope) {
 	angular.element(document).on("click", function(e) {
 		$rootScope.$broadcast("documentClicked", angular.element(e.target));
 	});
+    
+    angular.element(document).on("keyup", function(e) {
+        if (e.keyCode === 27)
+		  $rootScope.$broadcast("escapePressed", angular.element(e.target));
+	});
 });
 });
 
@@ -278,8 +316,22 @@ app.controller("timer", function($scope) {
         { id: 1, name: "Traque" },
         { id: 2, name: "Relincd" },
         { id: 3, name: "WestJet" },
-        { id: 4, name: "Leaf" }
+        { id: 4, name: "Leaf" },
+        { id: 0, name: "Create New Project..." }
     ];
+    
+    $scope.newProject = {
+        visible: false,
+        loading: false,
+        
+        ok: function() {
+            
+        },
+        
+        cancel: function() {
+            
+        }
+    };
 });
 });
 

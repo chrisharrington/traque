@@ -1,7 +1,8 @@
 <div class="timer-container">
-    <div class="project-container">
-        <dropdown placeholder="Project..." list="projects" property="name"></dropdown>
-        <i class="fa fa-plus"></i>
-    </div>
+    <dropdown placeholder="Project..." list="projects" property="name"></dropdown>
 	<button>Go!</button>
+    
+    <modal visible="newProject.visible" title="New Project" loading="newProject.loading" ok="newProject.ok" cancel="newProject.cancel">
+        blah!
+    </modal>
 </div>

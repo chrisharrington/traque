@@ -2141,6 +2141,144 @@ menu-item > a > i {
   text-align: center;
 }
 
+.shadow {
+  box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
+}
+.dark-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.border {
+  border: solid 1px #cccccc;
+}
+.border-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hidden {
+  display: none !important;
+}
+.tile {
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
+  border-radius: 2px;
+  background: #ffffff;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.deleted {
+  opacity: 0.6;
+}
+.header-font {
+  font-family: "Roboto Condensed";
+  color: black;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+modal {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+modal > div.overlay {
+  background: black;
+  position: fixed;
+  opacity: 0.6;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 3;
+}
+modal > div.overlay.show {
+  visibility: visible;
+  opacity: 0.6;
+  -webkit-transition: opacity ease 250ms;
+  -moz-transition: opacity ease 250ms;
+  -ms-transition: opacity ease 250ms;
+  -o-transition: opacity ease 250ms;
+  transition: opacity ease 250ms;
+  -webkit-transition-delay: 100ms;
+  -moz-transition-delay: 100ms;
+  -ms-transition-delay: 100ms;
+  -o-transition-delay: 100ms;
+  transition-delay: 100ms;
+}
+modal > div.overlay.hide {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 250ms, opacity ease 250ms;
+}
+modal > div.content-container {
+  width: 100%;
+  position: absolute;
+  z-index: 4;
+  -webkit-transition: transform ease 250ms, -webkit-transform ease 250ms;
+  -moz-transition: transform ease 250ms, -webkit-transform ease 250ms;
+  -ms-transition: transform ease 250ms, -webkit-transform ease 250ms;
+  -o-transition: transform ease 250ms, -webkit-transform ease 250ms;
+  transition: transform ease 250ms, -webkit-transform ease 250ms;
+  -webkit-transition-delay: 100ms;
+  -moz-transition-delay: 100ms;
+  -ms-transition-delay: 100ms;
+  -o-transition-delay: 100ms;
+  transition-delay: 100ms;
+  transform: translate3d(0, calc(-100% - 50px), 0);
+  -ms-transform: translate3d(0, calc(-100% - 50px), 0);
+  -webkit-transform: translate3d(0, calc(-100% - 50px), 0);
+  -o-transform: translate3d(0, calc(-100% - 50px), 0);
+  -moz-transform: translate3d(0, calc(-100% - 50px), 0);
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
+  border-radius: 2px;
+  background: #ffffff;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+modal > div.content-container.show {
+  transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+}
+modal > div.content-container > h1 {
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  position: relative;
+  background: white;
+  color: #0077ff;
+  font-size: 1.75em;
+  text-transform: uppercase;
+}
+modal > div.content-container > div.content {
+  float: left;
+  width: 100%;
+  margin-top: 12px;
+}
+modal > div.content-container > div.button-container {
+  float: left;
+  width: 100%;
+  margin-top: 12px;
+}
+modal > div.content-container > div.button-container > button {
+  float: right;
+  width: 70%;
+}
+modal > div.content-container > div.button-container > button[negative] {
+  width: 28%;
+  float: left;
+}
+
 profile-image > img {
   width: 100%;
   height: 100%;
@@ -2282,28 +2420,9 @@ text.error div.focus > div {
   font-size: 1.5em;
   font-weight: bold;
 }
-.timer-container > div.project-container {
+.timer-container > dropdown {
   float: left;
   width: 100%;
-}
-.timer-container > div.project-container > dropdown {
-  float: left;
-  width: 100%;
-  padding-right: 38px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-.timer-container > div.project-container > i {
-  float: left;
-  text-align: right;
-  width: 14px;
-  margin-left: -38px;
-  height: 40px;
-  line-height: 40px !important;
-  display: inline-block;
-  vertical-align: middle;
-  cursor: pointer;
-  padding: 0 12px;
 }
 .timer-container > button {
   float: left;
