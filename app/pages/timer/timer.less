@@ -2,6 +2,10 @@
 @import "../../style/mixins.less";
 
 .timer-container {
-	>dropdown { float:left; width:100%; margin-top:@spacing; }
+    >div.project-container { float:left; width:100%;
+        @icon-width:14px;
+        >dropdown { float:left; width:100%; padding-right:@icon-width+@spacing*2; .border-box; }
+        >i { float:left; text-align:right; width:@icon-width; margin-left:(@spacing*2+@icon-width)*-1; .vertical-centre(@input-height); cursor:pointer; padding:0 @spacing; }
+    }
 	>button { float:left; width:100%; margin-top:@spacing; }
 }

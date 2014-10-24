@@ -1678,7 +1678,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #aaaaaa;
+  border: solid 1px #cccccc;
 }
 .border-box {
   box-sizing: border-box;
@@ -1712,7 +1712,7 @@
 div.checkbox-container {
   float: left;
   width: 100%;
-  border-bottom: solid 1px #aaaaaa;
+  border-bottom: solid 1px #cccccc;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   cursor: pointer;
@@ -1743,7 +1743,7 @@ div.checkbox-container > div.padded-wrapper > div.inner-checkbox-container > div
   -moz-box-sizing: border-box;
 }
 div.checkbox-container > div.padded-wrapper > div.inner-checkbox-container > div.square {
-  border: solid 1px #aaaaaa;
+  border: solid 1px #cccccc;
 }
 div.checkbox-container > div.padded-wrapper > div.inner-checkbox-container > div.check {
   background: #0077ff;
@@ -1828,7 +1828,7 @@ div.checkbox-container.checked div.transclude > span {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #aaaaaa;
+  border: solid 1px #cccccc;
 }
 .border-box {
   box-sizing: border-box;
@@ -1859,6 +1859,104 @@ div.checkbox-container.checked div.transclude > span {
   font-size: 1.5em;
   font-weight: bold;
 }
+dropdown > div {
+  float: left;
+  width: 100%;
+}
+dropdown > div > div.dropdown-display {
+  float: left;
+  width: 100%;
+  background: white;
+  border: solid 1px #cccccc;
+  height: 40px;
+  cursor: pointer;
+}
+dropdown > div > div.dropdown-display > * {
+  float: left;
+  height: 100%;
+  height: 40px;
+  line-height: 40px !important;
+  display: inline-block;
+  vertical-align: middle;
+}
+dropdown > div > div.dropdown-display > span {
+  font-size: 0.875em;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  padding-right: 38px;
+  padding-left: 12px;
+}
+dropdown > div > div.dropdown-display > span.placeholder {
+  color: #aaaaaa;
+}
+dropdown > div > div.dropdown-display > i {
+  position: relative;
+  width: 14px;
+  margin-left: -26px;
+  font-size: 1.125em;
+  font-weight: bold;
+  padding-right: 12px;
+  text-align: right;
+}
+dropdown > div > div.dropdown-list {
+  float: left;
+  position: relative;
+  width: 100%;
+  transform: scale(1, 0);
+  -ms-transform: scale(1, 0);
+  -webkit-transform: scale(1, 0);
+  -o-transform: scale(1, 0);
+  -moz-transform: scale(1, 0);
+  -webkit-transition: transform ease 250ms, -webkit-transform ease 250ms;
+  -moz-transition: transform ease 250ms, -webkit-transform ease 250ms;
+  -ms-transition: transform ease 250ms, -webkit-transform ease 250ms;
+  -o-transition: transform ease 250ms, -webkit-transform ease 250ms;
+  transition: transform ease 250ms, -webkit-transform ease 250ms;
+  -webkit-transition-delay: 100ms;
+  -moz-transition-delay: 100ms;
+  -ms-transition-delay: 100ms;
+  -o-transition-delay: 100ms;
+  transition-delay: 100ms;
+}
+dropdown > div > div.dropdown-list > div {
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+  cursor: pointer;
+  background: white;
+  border: solid 1px #cccccc;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+dropdown > div > div.dropdown-list > div > span {
+  float: left;
+  width: 100%;
+  padding: 0 12px;
+  height: 40px;
+  line-height: 40px !important;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 0.875em;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border-top: solid 1px #cccccc;
+}
+dropdown > div > div.dropdown-list > div > span:first-child {
+  border-top: none;
+}
+dropdown > div > div.dropdown-list > div > span:hover {
+  background: #F0F0F0;
+}
+dropdown > div.show > div.dropdown-list {
+  transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  -webkit-transform: scale(1, 1);
+  -o-transform: scale(1, 1);
+  -moz-transform: scale(1, 1);
+}
 
 .shadow {
   box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
@@ -1867,7 +1965,7 @@ div.checkbox-container.checked div.transclude > span {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #aaaaaa;
+  border: solid 1px #cccccc;
 }
 .border-box {
   box-sizing: border-box;
@@ -1953,6 +2051,7 @@ menu > div > div.user > div.info {
   padding-left: 12px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+  margin-top: 5px;
 }
 menu > div > div.user > div.info > span {
   float: left;
@@ -1970,6 +2069,7 @@ menu > div > menu-item {
   display: block;
   padding: 12px;
   color: #bbbbbb;
+  font-size: 0.875em;
 }
 menu > div > div.user:hover,
 menu > div > menu-item:hover {
@@ -1984,7 +2084,7 @@ menu > div > menu-item:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #aaaaaa;
+  border: solid 1px #cccccc;
 }
 .border-box {
   box-sizing: border-box;
@@ -2053,7 +2153,7 @@ profile-image > img {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #aaaaaa;
+  border: solid 1px #cccccc;
 }
 .border-box {
   box-sizing: border-box;
@@ -2092,29 +2192,23 @@ div.text-container > input {
   float: left;
   width: 100%;
   -webkit-appearance: none;
-  border: none;
   padding: 12px;
-  border: solid 1px #aaaaaa;
+  border: solid 1px #cccccc;
   font-size: 0.875em;
-  font-family: "Open Sans", "Arial", "sans-serif";
+  font-family: "Helvetica", "Arial", "sans-serif";
   background: white;
   outline: none;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-}
-div.text-container > div.border,
-div.text-container > div.focus {
-  float: left;
-  width: 100%;
-  height: 1px;
-  background: transparent;
-  border-color: transparent;
 }
 div.text-container > div.focus {
   float: left;
   width: 100%;
   margin-top: -1px;
   position: relative;
+  height: 1px;
+  background: transparent;
+  border-color: transparent;
 }
 div.text-container > div.focus > div {
   position: absolute;
@@ -2146,9 +2240,6 @@ text.focus div.focus > div {
   -o-transform: scale(1, 1);
   -moz-transform: scale(1, 1);
 }
-text.focus input {
-  border-color: #0077ff;
-}
 text.error div.focus > div {
   background: red;
 }
@@ -2160,7 +2251,7 @@ text.error div.focus > div {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #aaaaaa;
+  border: solid 1px #cccccc;
 }
 .border-box {
   box-sizing: border-box;
@@ -2191,10 +2282,28 @@ text.error div.focus > div {
   font-size: 1.5em;
   font-weight: bold;
 }
-.timer-container > dropdown {
+.timer-container > div.project-container {
   float: left;
   width: 100%;
-  margin-top: 12px;
+}
+.timer-container > div.project-container > dropdown {
+  float: left;
+  width: 100%;
+  padding-right: 38px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.timer-container > div.project-container > i {
+  float: left;
+  text-align: right;
+  width: 14px;
+  margin-left: -38px;
+  height: 40px;
+  line-height: 40px !important;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 0 12px;
 }
 .timer-container > button {
   float: left;
@@ -2209,7 +2318,7 @@ text.error div.focus > div {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #aaaaaa;
+  border: solid 1px #cccccc;
 }
 .border-box {
   box-sizing: border-box;
@@ -2243,7 +2352,7 @@ text.error div.focus > div {
 body {
   margin: 0;
   padding: 0;
-  font-family: "Open Sans", "Arial", "sans-serif";
+  font-family: "Helvetica", "Arial", "sans-serif";
   font-size: 16px;
   color: #444;
   background: #F0F0F0;
@@ -2300,6 +2409,10 @@ section.content-container {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
+input,
+select {
+  font-size: 0.875em;
+}
 
 .shadow {
   box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
@@ -2308,7 +2421,7 @@ section.content-container {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #aaaaaa;
+  border: solid 1px #cccccc;
 }
 .border-box {
   box-sizing: border-box;
@@ -2345,7 +2458,7 @@ button {
   line-height: 40px;
   padding: 0;
   text-align: center;
-  font-family: "Open Sans", "Arial", "sans-serif";
+  font-family: "Helvetica", "Arial", "sans-serif";
   text-transform: uppercase;
   color: white;
   background: #0077ff;
@@ -2387,7 +2500,7 @@ button[disabled] {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #aaaaaa;
+  border: solid 1px #cccccc;
 }
 .border-box {
   box-sizing: border-box;

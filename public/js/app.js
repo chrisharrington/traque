@@ -117,10 +117,35 @@ app.directive("checkbox", function($sce) {
 });
 
 require.register("directives/dropdown/dropdown", function(exports, require, module) {
-app.directive("dropdown", function() {
+var Utilities = require("utilities");
+
+app.directive("dropdown", function($rootScope) {
 	return {
 		restrict: "E",
-		templateUrl: "directives/dropdown.html"
+		templateUrl: "directives/dropdown.html",
+        scope: {
+            placeholder: "@",
+            list: "=",
+            property: "@"
+        },
+        link: function(scope) {
+            scope.listVisible = false;
+            scope.isPlaceholder = true;
+            scope.selected = scope.placeholder;
+            
+            scope.select = function(item) {
+                scope.isPlaceholder = false;
+                scope.selected = scope.property !== undefined ? item[scope.property] : item;
+            }
+            
+            $rootScope.$on("documentClicked", function(inner, target) {
+                var classes = ["dropdown-display", "clicked"];
+				if (!Utilities.hasClasses(target[0], classes) && !Utilities.parentHasClasses(target[0], classes))
+					scope.$apply(function() {
+						scope.listVisible = false;
+					});
+			});
+        }
 	}
 });
 });
@@ -139,6 +164,8 @@ require.register("directives/index", function(exports, require, module) {
 });
 
 ;require.register("directives/menu/menu", function(exports, require, module) {
+var Utilities = require("utilities");
+
 app.directive("menu", function($rootScope) {
 	return {
 		restrict: "E",
@@ -152,27 +179,12 @@ app.directive("menu", function($rootScope) {
 			scope.email = "chrisharrington99@gmail.com";
 			
 			$rootScope.$on("documentClicked", function(inner, target) {
-				if (!_hasClass(target[0], scope.trigger) && !_parentHasClass(target[0], scope.trigger))
+				if (!Utilities.hasClass(target[0], scope.trigger) && !Utilities.parentHasClass(target[0], scope.trigger))
 					scope.$apply(function() {
 						scope.visible = false;
 					});
 			});
 		}
-	}
-	
-	function _hasClass(element, className) {
-		return _.contains(element.className.split(" "), className);
-	}
-	
-	function _parentHasClass(element, className) {
-		while (element.parentNode !== null) {
-			if (_hasClass(element, className))
-				return true;
-			
-			element = element.parentNode;
-		}
-		
-		return false;
 	}
 });
 });
@@ -261,9 +273,47 @@ require.register("pages/index", function(exports, require, module) {
 });
 
 require.register("pages/timer/timer", function(exports, require, module) {
-app.controller("timer", function() {
-	
+app.controller("timer", function($scope) {
+    $scope.projects = [
+        { id: 1, name: "Traque" },
+        { id: 2, name: "Relincd" },
+        { id: 3, name: "WestJet" },
+        { id: 4, name: "Leaf" }
+    ];
 });
+});
+
+require.register("utilities", function(exports, require, module) {
+module.exports = {
+    hasClass: function(element, className) {
+        return _.contains(element.className.split(" "), className);
+    },
+    
+    parentHasClass: function(element, className) {
+        while (element.parentNode !== null) {
+			if (this.hasClass(element, className))
+				return true;
+			
+			element = element.parentNode;
+		}
+		
+		return false;
+    },
+    
+    hasClasses: function(element, classes) {
+        var me = this;
+        return _.every(classes, function(className) {
+            return me.hasClass(element, className);
+        });
+    },
+    
+    parentHasClasses: function(element, classes) {
+        var me = this;
+        return _.every(classes, function(className) {
+            return me.parentHasClass(element, className); 
+        });
+    }
+};
 });
 
 
