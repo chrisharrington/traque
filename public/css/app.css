@@ -1740,7 +1740,7 @@ div.checkbox-container > div.padded-wrapper > div.inner-checkbox-container > div
   border: solid 1px #cccccc;
 }
 div.checkbox-container > div.padded-wrapper > div.inner-checkbox-container > div.check {
-  background: #0077ff;
+  background: #4abb34;
   -webkit-transition: all ease 250ms;
   -moz-transition: all ease 250ms;
   -ms-transition: all ease 250ms;
@@ -1855,9 +1855,9 @@ dropdown > div > div.dropdown-display {
   float: left;
   width: 100%;
   background: white;
-  border: solid 1px #cccccc;
   height: 40px;
   cursor: pointer;
+  border-radius: 2px;
 }
 dropdown > div > div.dropdown-display > * {
   float: left;
@@ -1914,8 +1914,6 @@ dropdown > div > div.dropdown-list > div {
   z-index: 2;
   cursor: pointer;
   background: white;
-  border: solid 1px #cccccc;
-  border-top: none;
   max-height: 200px;
   overflow-y: scroll;
 }
@@ -1930,10 +1928,7 @@ dropdown > div > div.dropdown-list > div > span {
   font-size: 0.875em;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  border-top: solid 1px #cccccc;
-}
-dropdown > div > div.dropdown-list > div > span:first-child {
-  border-top: none;
+  border-top: solid 1px #EEE;
 }
 dropdown > div > div.dropdown-list > div > span:hover {
   background: #F0F0F0;
@@ -2033,7 +2028,7 @@ menu > div > div.user > div.info {
   padding-left: 12px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  margin-top: 5px;
+  margin-top: 8px;
 }
 menu > div > div.user > div.info > span {
   float: left;
@@ -2158,7 +2153,7 @@ modal {
   margin: auto;
 }
 modal > div.overlay {
-  background: black;
+  background: #333;
   position: fixed;
   opacity: 0.6;
   top: 0;
@@ -2187,7 +2182,10 @@ modal > div.overlay.hide {
   transition: visibility 0s 250ms, opacity ease 250ms;
 }
 modal > div.content-container {
-  width: 100%;
+  width: 90%;
+  margin: auto;
+  left: 0;
+  right: 0;
   position: absolute;
   z-index: 4;
   -webkit-transition: transform ease 250ms, -webkit-transform ease 250ms;
@@ -2211,6 +2209,7 @@ modal > div.content-container {
   background: #ffffff;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+  background: url(../images/background.png);
 }
 modal > div.content-container.show {
   transform: translate3d(0, 0, 0);
@@ -2225,9 +2224,6 @@ modal > div.content-container > h1 {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   position: relative;
-  background: white;
-  color: #0077ff;
-  font-size: 1.75em;
   text-transform: uppercase;
 }
 modal > div.content-container > div.content {
@@ -2295,13 +2291,14 @@ div.text-container > input {
   width: 100%;
   -webkit-appearance: none;
   padding: 12px;
-  border: solid 1px #cccccc;
+  border: none;
   font-size: 0.875em;
   font-family: "Helvetica", "Arial", "sans-serif";
   background: white;
   outline: none;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+  border-radius: 2px;
 }
 div.text-container > div.focus {
   float: left;
@@ -2323,7 +2320,7 @@ div.text-container > div.focus > div {
   -moz-transform: scale(0, 1);
   height: 2px;
   margin-top: -1px;
-  background: #0077ff;
+  background: #4abb34;
   -webkit-transition: all ease 250ms;
   -moz-transition: all ease 250ms;
   -ms-transition: all ease 250ms;
@@ -2386,6 +2383,13 @@ text.error div.focus > div {
 .timer-container > *:first-child {
   margin-top: 0;
 }
+.timer-container > modal {
+  margin-top: 0;
+}
+.timer-container #new-project text {
+  float: left;
+  width: 100%;
+}
 
 .shadow {
   box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
@@ -2425,7 +2429,7 @@ body {
   font-family: "Helvetica", "Arial", "sans-serif";
   font-size: 16px;
   color: #444;
-  background: #F0F0F0;
+  background: url(../images/background.png);
 }
 h1,
 h2,
@@ -2433,18 +2437,20 @@ h3,
 h4 {
   padding: 0;
   margin: 0;
+  color: black;
   font-family: "Roboto Condensed";
   text-transform: uppercase;
   font-weight: bold;
 }
 h1 {
   font-size: 2em;
+  line-height: 30px;
 }
 header {
   position: fixed;
   height: 50px;
   width: 100%;
-  background: linear-gradient(to bottom, #005fcc, #3392ff);
+  background: linear-gradient(to bottom, #4abb34, #3a9329);
   color: white;
 }
 header > div.menu-trigger {
@@ -2520,6 +2526,7 @@ select {
 }
 button {
   height: 40px;
+  font-weight: bold;
   box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
   line-height: 40px;
   padding: 0;
@@ -2527,7 +2534,7 @@ button {
   font-family: "Helvetica", "Arial", "sans-serif";
   text-transform: uppercase;
   color: white;
-  background: #0077ff;
+  background: linear-gradient(to bottom, #67cf53, #3a9329);
   border: none;
   font-size: 0.875em;
   border-radius: 2px;
@@ -2538,11 +2545,10 @@ button {
 }
 button:active {
   box-shadow: none;
-  background: #1a85ff;
 }
 button.link {
   background: transparent;
-  color: #0077ff;
+  color: #4abb34;
   font-size: 0.875em;
   box-shadow: none;
 }
@@ -2557,6 +2563,9 @@ button.loading::before {
 }
 button[disabled] {
   background: #909090;
+}
+button[negative] {
+  background: linear-gradient(to bottom, #cf5353, #932929);
 }
 
 .shadow {

@@ -1,9 +1,10 @@
 @import "variables.less";
 @import "mixins.less";
 
-button { height:@input-height; .shadow; line-height:@input-height; padding:0; text-align:center; font-family:@regular-font; text-transform:uppercase; color:white; background:@secondary-colour; border:none; font-size:0.875em; .border-radius; cursor:pointer; margin:0; -webkit-appearance:none; outline:none; }
-button:active { box-shadow:none; background:lighten(@secondary-colour, 5%); }
+button { height:@input-height; font-weight:bold; .shadow; line-height:@input-height; padding:0; text-align:center; font-family:@regular-font; text-transform:uppercase; color:white; .gradient(lighten(@secondary-colour, 10%), darken(@secondary-colour, 10%)); border:none; font-size:0.875em; .border-radius; cursor:pointer; margin:0; -webkit-appearance:none; outline:none; }
+button:active { box-shadow:none; }
 button.link { background:transparent; color:@secondary-colour; font-size:0.875em; box-shadow:none; }
 button.loading { font-size:0; background:#909090; cursor:default; }
 button.loading::before { margin:auto; margin-top:10px; }
 button[disabled] { background:#909090; }
+button[negative] { .gradient(lighten(@negative-colour, 10%), darken(@negative-colour, 10%)); }

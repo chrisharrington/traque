@@ -3,13 +3,13 @@
 
 modal { position:absolute; display:block; top:0; left:0; right:0; margin:auto;
 	@buffer:130px;
-	>div.overlay { background:black; position:fixed; opacity:0.6; top:0; right:0; bottom:0; left:0; z-index:3;
+	>div.overlay { background:#333; position:fixed; opacity:0.6; top:0; right:0; bottom:0; left:0; z-index:3;
 		&.show { visibility:visible; opacity:0.6; .transition(opacity ease @animation-speed); }
 		&.hide { visibility:hidden; opacity:0; transition:visibility 0s @animation-speed, opacity ease @animation-speed; }
 	}
-  	>div.content-container { width:100%; position:absolute; z-index:4; .transition(transform ease @animation-speed, -webkit-transform ease @animation-speed); .transform(translate3d(0, ~"calc(-100% - 50px)", 0)); .tile;
+  	>div.content-container { width:90%; margin:auto; left:0; right:0; position:absolute; z-index:4; .transition(transform ease @animation-speed, -webkit-transform ease @animation-speed); .transform(translate3d(0, ~"calc(-100% - 50px)", 0)); .tile; background:url(../images/background.png);
 		&.show { .transform(translate3d(0, 0, 0)); }
-        >h1 { float:left; width:100%; .border-box; position:relative; background:white; color:@secondary-colour; font-size:1.75em; text-transform:uppercase; }
+        >h1 { float:left; width:100%; .border-box; position:relative; text-transform:uppercase; }
         >div.content { float:left; width:100%; margin-top:@spacing; }
         >div.button-container { float:left; width:100%; margin-top:@spacing;
             >button { float:right; width:70%; }

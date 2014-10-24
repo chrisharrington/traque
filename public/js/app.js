@@ -126,7 +126,8 @@ app.directive("dropdown", function($rootScope) {
         scope: {
             placeholder: "@",
             list: "=",
-            property: "@"
+            property: "@",
+			onChange: "=change"
         },
         link: function(scope) {
             scope.listVisible = false;
@@ -136,6 +137,8 @@ app.directive("dropdown", function($rootScope) {
             scope.select = function(item) {
                 scope.isPlaceholder = false;
                 scope.selected = scope.property !== undefined ? item[scope.property] : item;
+				if (scope.onChange !== undefined)
+					scope.onChange(item);
             }
             
             $rootScope.$on("documentClicked", function(inner, target) {
@@ -323,6 +326,7 @@ app.controller("timer", function($scope) {
     $scope.newProject = {
         visible: false,
         loading: false,
+		name: "",
         
         ok: function() {
             
@@ -332,6 +336,10 @@ app.controller("timer", function($scope) {
             
         }
     };
+	
+	$scope.onSelect = function() {
+		$scope.newProject.visible = true;
+	};
 });
 });
 

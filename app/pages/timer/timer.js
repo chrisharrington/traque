@@ -10,6 +10,7 @@ app.controller("timer", function($scope) {
     $scope.newProject = {
         visible: false,
         loading: false,
+		name: "",
         
         ok: function() {
             
@@ -19,4 +20,8 @@ app.controller("timer", function($scope) {
             
         }
     };
+	
+	$scope.onSelect = function() {
+		$scope.newProject.visible = true;
+	};
 });

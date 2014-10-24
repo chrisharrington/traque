@@ -1,9 +1,9 @@
 <div class="timer-container">
 	<h1>Timer</h1>
-    <dropdown placeholder="Project..." list="projects" property="name"></dropdown>
+    <dropdown placeholder="Project..." list="projects" property="name" change="onSelect"></dropdown>
 	<button>Go!</button>
     
-    <modal visible="newProject.visible" title="New Project" loading="newProject.loading" ok="newProject.ok" cancel="newProject.cancel">
-        blah!
+    <modal id="new-project" visible="newProject.visible" title="New Project" loading="newProject.loading" ok="newProject.ok" cancel="newProject.cancel">
+        <text type="text" placeholder="Project name..." ng-model="newProject.name"></text>
     </modal>
 </div>
