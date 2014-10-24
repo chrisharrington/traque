@@ -1703,12 +1703,6 @@
 .deleted {
   opacity: 0.6;
 }
-.header-font {
-  font-family: "Roboto Condensed";
-  color: black;
-  font-size: 1.5em;
-  font-weight: bold;
-}
 div.checkbox-container {
   float: left;
   width: 100%;
@@ -1853,12 +1847,6 @@ div.checkbox-container.checked div.transclude > span {
 .deleted {
   opacity: 0.6;
 }
-.header-font {
-  font-family: "Roboto Condensed";
-  color: black;
-  font-size: 1.5em;
-  font-weight: bold;
-}
 dropdown > div {
   float: left;
   width: 100%;
@@ -1990,12 +1978,6 @@ dropdown > div.show > div.dropdown-list {
 .deleted {
   opacity: 0.6;
 }
-.header-font {
-  font-family: "Roboto Condensed";
-  color: black;
-  font-size: 1.5em;
-  font-weight: bold;
-}
 menu {
   margin: 0;
   padding: 0;
@@ -2109,12 +2091,6 @@ menu > div > menu-item:hover {
 .deleted {
   opacity: 0.6;
 }
-.header-font {
-  font-family: "Roboto Condensed";
-  color: black;
-  font-size: 1.5em;
-  font-weight: bold;
-}
 menu-item {
   display: block;
   cursor: pointer;
@@ -2172,12 +2148,6 @@ menu-item > a > i {
 }
 .deleted {
   opacity: 0.6;
-}
-.header-font {
-  font-family: "Roboto Condensed";
-  color: black;
-  font-size: 1.5em;
-  font-weight: bold;
 }
 modal {
   position: absolute;
@@ -2316,12 +2286,6 @@ profile-image > img {
 .deleted {
   opacity: 0.6;
 }
-.header-font {
-  font-family: "Roboto Condensed";
-  color: black;
-  font-size: 1.5em;
-  font-weight: bold;
-}
 div.text-container {
   float: left;
   width: 100%;
@@ -2414,20 +2378,13 @@ text.error div.focus > div {
 .deleted {
   opacity: 0.6;
 }
-.header-font {
-  font-family: "Roboto Condensed";
-  color: black;
-  font-size: 1.5em;
-  font-weight: bold;
-}
-.timer-container > dropdown {
-  float: left;
-  width: 100%;
-}
-.timer-container > button {
+.timer-container > * {
   float: left;
   width: 100%;
   margin-top: 12px;
+}
+.timer-container > *:first-child {
+  margin-top: 0;
 }
 
 .shadow {
@@ -2462,12 +2419,6 @@ text.error div.focus > div {
 .deleted {
   opacity: 0.6;
 }
-.header-font {
-  font-family: "Roboto Condensed";
-  color: black;
-  font-size: 1.5em;
-  font-weight: bold;
-}
 body {
   margin: 0;
   padding: 0;
@@ -2483,9 +2434,11 @@ h4 {
   padding: 0;
   margin: 0;
   font-family: "Roboto Condensed";
-  color: black;
-  font-size: 1.5em;
+  text-transform: uppercase;
   font-weight: bold;
+}
+h1 {
+  font-size: 2em;
 }
 header {
   position: fixed;
@@ -2565,12 +2518,6 @@ select {
 .deleted {
   opacity: 0.6;
 }
-.header-font {
-  font-family: "Roboto Condensed";
-  color: black;
-  font-size: 1.5em;
-  font-weight: bold;
-}
 button {
   height: 40px;
   box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
@@ -2643,12 +2590,6 @@ button[disabled] {
 }
 .deleted {
   opacity: 0.6;
-}
-.header-font {
-  font-family: "Roboto Condensed";
-  color: black;
-  font-size: 1.5em;
-  font-weight: bold;
 }
 
 

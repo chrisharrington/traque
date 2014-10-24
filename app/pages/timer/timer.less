@@ -2,6 +2,7 @@
 @import "../../style/mixins.less";
 
 .timer-container {
-    >dropdown { float:left; width:100%; }
-	>button { float:left; width:100%; margin-top:@spacing; }
+	>* { float:left; width:100%; margin-top:@spacing;
+		&:first-child { margin-top:0; }
+	}
 }
