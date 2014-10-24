@@ -2229,12 +2229,12 @@ modal > div.content-container > h1 {
 modal > div.content-container > div.content {
   float: left;
   width: 100%;
-  margin-top: 12px;
+  margin-top: 24px;
 }
 modal > div.content-container > div.button-container {
   float: left;
   width: 100%;
-  margin-top: 12px;
+  margin-top: 24px;
 }
 modal > div.content-container > div.button-container > button {
   float: right;
@@ -2378,7 +2378,7 @@ text.error div.focus > div {
 .timer-container > * {
   float: left;
   width: 100%;
-  margin-top: 12px;
+  margin-top: 24px;
 }
 .timer-container > *:first-child {
   margin-top: 0;

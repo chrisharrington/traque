@@ -10,8 +10,8 @@ modal { position:absolute; display:block; top:0; left:0; right:0; margin:auto;
   	>div.content-container { width:90%; margin:auto; left:0; right:0; position:absolute; z-index:4; .transition(transform ease @animation-speed, -webkit-transform ease @animation-speed); .transform(translate3d(0, ~"calc(-100% - 50px)", 0)); .tile; background:url(../images/background.png);
 		&.show { .transform(translate3d(0, 0, 0)); }
         >h1 { float:left; width:100%; .border-box; position:relative; text-transform:uppercase; }
-        >div.content { float:left; width:100%; margin-top:@spacing; }
-        >div.button-container { float:left; width:100%; margin-top:@spacing;
+        >div.content { float:left; width:100%; margin-top:@spacing*2; }
+        >div.button-container { float:left; width:100%; margin-top:@spacing*2;
             >button { float:right; width:70%; }
             >button[negative] { width:28%; float:left; }
         }

@@ -127,19 +127,19 @@ app.directive("dropdown", function($rootScope) {
             placeholder: "@",
             list: "=",
             property: "@",
-			onChange: "=change"
+			onChange: "=change",
+			selected: "="
         },
         link: function(scope) {
             scope.listVisible = false;
             scope.isPlaceholder = true;
-            scope.selected = scope.placeholder;
-            
+			
             scope.select = function(item) {
                 scope.isPlaceholder = false;
-                scope.selected = scope.property !== undefined ? item[scope.property] : item;
+                scope.selected = item;
 				if (scope.onChange !== undefined)
 					scope.onChange(item);
-            }
+            };
             
             $rootScope.$on("documentClicked", function(inner, target) {
                 var classes = ["dropdown-display", "clicked"];
@@ -147,6 +147,11 @@ app.directive("dropdown", function($rootScope) {
 					scope.$apply(function() {
 						scope.listVisible = false;
 					});
+			});
+			
+			scope.$watch("selected", function(value) {
+				scope.isPlaceholder = scope.selected[scope.property] === undefined;
+				scope.display = scope.selected[scope.property];
 			});
         }
 	}
@@ -314,7 +319,7 @@ require.register("pages/index", function(exports, require, module) {
 });
 
 require.register("pages/timer/timer", function(exports, require, module) {
-app.controller("timer", function($scope) {
+app.controller("timer", function($rootScope, $scope) {
     $scope.projects = [
         { id: 1, name: "Traque" },
         { id: 2, name: "Relincd" },
@@ -322,6 +327,8 @@ app.controller("timer", function($scope) {
         { id: 4, name: "Leaf" },
         { id: 0, name: "Create New Project..." }
     ];
+	
+	$scope.project = {};
     
     $scope.newProject = {
         visible: false,
@@ -333,13 +340,82 @@ app.controller("timer", function($scope) {
         },
         
         cancel: function() {
-            
+            $scope.newProject.name = "";
+			$scope.project = {};
         }
     };
 	
-	$scope.onSelect = function() {
-		$scope.newProject.visible = true;
+	$scope.onSelect = function(selected) {
+		if (selected.id === 0)
+			$scope.newProject.visible = true;
 	};
+});
+});
+
+require.register("stores/base", function(exports, require, module) {
+var Config = require("config"),
+	
+	emitter = require("dispatcher/emitter"),
+	dispatcher = require("dispatcher/dispatcher"),
+	constants = require("constants");
+
+app.factory("baseStore", function($timeout, $http) {
+	return function(model, constants, url) {
+		var me = this;
+
+		this.all = function() {
+			return new Promise(function(resolve, reject) {
+				$timeout(function() {
+					emitter.emit(constants.ALL, []);
+				}, 250);
+			});
+		};
+
+		this.update = function(content) {
+			return new Promise(function(resolve) {
+				$timeout(function() {
+					emitter.emit(constants.UPDATE, content);
+					resolve();
+				}, 500);
+			});
+		};
+
+		this.create = function(content) {
+			return new Promise(function(resolve) {
+				$timeout(function() {
+					content.id = -1;
+					emitter.emit(constants.CREATE, content);
+					resolve();
+				}, 500);
+			});
+		};
+
+		this.remove = function(content) {
+			return new Promise(function(resolve) {
+				$timeout(function() {
+					emitter.emit(constants.REMOVE, content);
+					resolve();
+				}, 500);
+			});
+		};
+
+		dispatcher.register(function(payload) {
+			switch (payload.type) {
+				case constants.ALL:
+					me.all();
+					break;
+				case constants.UPDATE:
+					me.update(payload.content);
+					break;
+				case constants.CREATE:
+					me.create(payload.content);
+					break;
+				case constants.REMOVE:
+					me.remove(payload.content);
+					break;
+			}
+		});
+	}
 });
 });
 

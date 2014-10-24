@@ -8,19 +8,19 @@ app.directive("dropdown", function($rootScope) {
             placeholder: "@",
             list: "=",
             property: "@",
-			onChange: "=change"
+			onChange: "=change",
+			selected: "="
         },
         link: function(scope) {
             scope.listVisible = false;
             scope.isPlaceholder = true;
-            scope.selected = scope.placeholder;
-            
+			
             scope.select = function(item) {
                 scope.isPlaceholder = false;
-                scope.selected = scope.property !== undefined ? item[scope.property] : item;
+                scope.selected = item;
 				if (scope.onChange !== undefined)
 					scope.onChange(item);
-            }
+            };
             
             $rootScope.$on("documentClicked", function(inner, target) {
                 var classes = ["dropdown-display", "clicked"];
@@ -28,6 +28,11 @@ app.directive("dropdown", function($rootScope) {
 					scope.$apply(function() {
 						scope.listVisible = false;
 					});
+			});
+			
+			scope.$watch("selected", function(value) {
+				scope.isPlaceholder = scope.selected[scope.property] === undefined;
+				scope.display = scope.selected[scope.property];
 			});
         }
 	}

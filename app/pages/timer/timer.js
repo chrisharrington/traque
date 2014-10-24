@@ -1,4 +1,4 @@
-app.controller("timer", function($scope) {
+app.controller("timer", function($rootScope, $scope) {
     $scope.projects = [
         { id: 1, name: "Traque" },
         { id: 2, name: "Relincd" },
@@ -6,6 +6,8 @@ app.controller("timer", function($scope) {
         { id: 4, name: "Leaf" },
         { id: 0, name: "Create New Project..." }
     ];
+	
+	$scope.project = {};
     
     $scope.newProject = {
         visible: false,
@@ -17,11 +19,13 @@ app.controller("timer", function($scope) {
         },
         
         cancel: function() {
-            
+            $scope.newProject.name = "";
+			$scope.project = {};
         }
     };
 	
-	$scope.onSelect = function() {
-		$scope.newProject.visible = true;
+	$scope.onSelect = function(selected) {
+		if (selected.id === 0)
+			$scope.newProject.visible = true;
 	};
 });
