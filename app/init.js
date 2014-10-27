@@ -1,10 +1,9 @@
 require("pages");
 require("directives");
+require("stores");
 
-app.config(function($routeProvider, $locationProvider) {
-	$routeProvider
-		.when("/timer", { templateUrl: "pages/timer.html", controller: "timer" })
-		.otherwise({ redirectTo: "/timer" });
+app.config(function($routeProvider) {
+	$routeProvider.otherwise({ redirectTo: "/timer" });
 });
 
 app.run(function($rootScope) {

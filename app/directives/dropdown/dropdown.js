@@ -22,6 +22,10 @@ app.directive("dropdown", function($rootScope) {
 					scope.onChange(item);
             };
             
+            scope.isSelected = function(item) {
+                return item.id === scope.selected.id;  
+            };
+            
             $rootScope.$on("documentClicked", function(inner, target) {
                 var classes = ["dropdown-display", "clicked"];
 				if (!Utilities.hasClasses(target[0], classes) && !Utilities.parentHasClasses(target[0], classes))

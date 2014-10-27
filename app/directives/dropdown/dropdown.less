@@ -13,9 +13,15 @@ dropdown {
         }
 
         >div.dropdown-list { float:left; width:100%; position:relative; width:100%; .transform(scale(1, 0)); .transition(transform ease @animation-speed, -webkit-transform ease @animation-speed);
-            >div { position:absolute; width:100%; z-index:2; cursor:pointer; background:white; max-height:200px; overflow-y:scroll;
-                >span { float:left; width:100%; padding:0 @spacing; .vertical-centre(@input-height); font-size:@input-font-size; .border-box; border-top:solid 1px #EEE;
+            >div { position:absolute; width:100%; z-index:2; cursor:pointer; background:white; max-height:220px; overflow-y:scroll;
+                >div { float:left; width:100%; padding:0 @spacing; font-size:@input-font-size; .border-box; border-top:solid 1px #EEE;
+                    @icon-width:20px;
                     &:hover { background:#F0F0F0; }
+                    &.selected { background:@secondary-colour; color:white; }
+                    >* { .vertical-centre(@input-height); }
+                    >span { float:left; width:100%; position:relative; padding-right:@icon-width+@spacing; .border-box; }
+                    >i { float:left; width:@icon-width; margin-left:@icon-width*-1; display:none; }
+                    &.selected>i { display:inline-block; }
                 }
             }
         }

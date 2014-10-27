@@ -90,6 +90,65 @@
   globals.require.list = list;
   globals.require.brunch = true;
 })();
+require.register("actions/base", function(exports, require, module) {
+module.exports = function(constants) {
+	this.all = function() {
+		return {
+			type: constants.ALL
+		};
+	};
+	
+	this.create = function(content) {
+		return {
+			type: constants.CREATE,
+			content: content
+		};
+	};
+};
+});
+
+require.register("actions/project", function(exports, require, module) {
+var BaseAction = require("actions/base"),
+	constants = require("events/constants");
+
+module.exports = new BaseAction(constants.project);
+});
+
+require.register("config", function(exports, require, module) {
+module.exports = {
+    apiUrl: "fixtures/"  
+};
+});
+
+require.register("controller", function(exports, require, module) {
+var _first = true;
+
+module.exports = {
+    create: function(app, key, route, params) {
+        app.config(function($routeProvider) {
+            $routeProvider.when(route.url, { templateUrl: route.template, controller: key });
+        });
+        
+        app.run(function($rootScope) {
+            $rootScope.$on("$routeChangeSuccess", function(scope, context) {
+                if (context.loadedTemplateUrl === route.template)
+                    $rootScope.title = route.title;
+            }); 
+        });
+        
+        app.controller(key, function($scope, $rootScope) {
+            if (_first === true)
+                params.init($rootScope, $scope);
+            
+            _first = false;
+            
+            params.methods($rootScope, $scope);
+            params.load($rootScope, $scope);
+        });
+    }
+};
+});
+
 require.register("directives/checkbox/checkbox", function(exports, require, module) {
 app.directive("checkbox", function($sce) {
 	return {
@@ -139,6 +198,10 @@ app.directive("dropdown", function($rootScope) {
                 scope.selected = item;
 				if (scope.onChange !== undefined)
 					scope.onChange(item);
+            };
+            
+            scope.isSelected = function(item) {
+                return item.id === scope.selected.id;  
             };
             
             $rootScope.$on("documentClicked", function(inner, target) {
@@ -288,14 +351,60 @@ app.directive("text", function() {
 });
 });
 
+require.register("events/constants", function(exports, require, module) {
+module.exports = {
+	user: {
+        ALL: "all-users",
+		CREATE: "create-user"
+    },
+    
+    project: {
+        ALL: "all-projects",
+        CREATE: "create-project"
+    }
+};
+});
+
+require.register("events/dispatcher", function(exports, require, module) {
+/* jshint node: true */
+"use strict";
+
+var Dispatcher = require("flux").Dispatcher;
+
+module.exports = new Dispatcher();
+});
+
+require.register("events/emitter", function(exports, require, module) {
+module.exports = new function() {
+    this._registrants = {};
+    
+    this.on = function(key, registrant) {
+        if (!key || !registrant)
+            return;
+        
+        if (!this._registrants[key])
+            this._registrants[key] = [];
+        this._registrants[key].push(registrant);
+    };
+    
+    this.emit = function(key, data) {
+        if (!key || !this._registrants[key])
+            return;
+        
+        this._registrants[key].forEach(function(registrant) {
+            registrant(data); 
+        });
+    };
+};
+});
+
 require.register("init", function(exports, require, module) {
 require("pages");
 require("directives");
+require("stores");
 
-app.config(function($routeProvider, $locationProvider) {
-	$routeProvider
-		.when("/timer", { templateUrl: "pages/timer.html", controller: "timer" })
-		.otherwise({ redirectTo: "/timer" });
+app.config(function($routeProvider) {
+	$routeProvider.otherwise({ redirectTo: "/timer" });
 });
 
 app.run(function($rootScope) {
@@ -312,6 +421,23 @@ app.run(function($rootScope) {
 });
 });
 
+require.register("models/base", function(exports, require, module) {
+module.exports = function(params) {
+    params = params || {};
+    _.extend(this, params);
+    
+    this.validate = params.validate || function() {
+        return true;
+    };
+}
+});
+
+;require.register("models/project", function(exports, require, module) {
+var BaseModel = require("models/base");
+
+module.exports = BaseModel;
+});
+
 require.register("pages/index", function(exports, require, module) {
 ["timer/timer"].forEach(function(location) {
 	require("pages/" + location);
@@ -319,104 +445,132 @@ require.register("pages/index", function(exports, require, module) {
 });
 
 require.register("pages/timer/timer", function(exports, require, module) {
-app.controller("timer", function($rootScope, $scope) {
-    $scope.projects = [
-        { id: 1, name: "Traque" },
-        { id: 2, name: "Relincd" },
-        { id: 3, name: "WestJet" },
-        { id: 4, name: "Leaf" },
-        { id: 0, name: "Create New Project..." }
-    ];
-	
-	$scope.project = {};
+var ProjectActions = require("actions/project"),
+    Project = require("models/project"),
+    Controller = require("controller"),
     
-    $scope.newProject = {
+    dispatcher = require("events/dispatcher"),
+    emitter = require("events/emitter"),
+    constants = require("events/constants");
+
+Controller.create(app, "timer", {
+    url: "/timer",
+    template: "pages/timer.html",
+    title: "Timer"
+}, {
+    init: function(rootScope, scope) {
+        emitter.on(constants.project.ALL, function(projects) {
+            scope.projects = [{ id: 0, name: "Create a project..." }].concat(projects);
+        });
+        
+        emitter.on(constants.project.CREATE, function(created) {
+            scope.$apply(function() {
+                scope.newProject.visible = false;
+                scope.newProject.project = {};
+                scope.newProject.loading = false;
+                scope.project = created;
+            });
+        });
+        
+        dispatcher.dispatch(ProjectActions.all());
+    },
+    
+    load: function(rootScope, scope) {
+        scope.project = {};
+        scope.newProject = _buildNewProjectContainer(scope);
+    },
+    
+    methods: function(rootScope, scope) {
+        scope.onSelect = function(selected) {
+            if (selected.id === 0)
+                scope.newProject.visible = true;
+        }
+    }
+});
+
+function _buildNewProjectContainer(scope) {
+    return {
         visible: false,
         loading: false,
-		name: "",
-        
+
+        project: new Project(),
+
         ok: function() {
-            
+            scope.newProject.loading = true;
+            dispatcher.dispatch(ProjectActions.create(scope.newProject.project));
         },
-        
+
         cancel: function() {
-            $scope.newProject.name = "";
-			$scope.project = {};
+            scope.newProject.name = "";
+            scope.project = {};
         }
     };
+}
+});
+
+;require.register("stores/base", function(exports, require, module) {
+var dispatcher = require("events/dispatcher"),
+    emitter = require("events/emitter")
+    config = require("config");
+
+var _id = 100;
+
+module.exports = function(constants, collection) {
+    var me = this;
+    
+    this.all = function() {
+        if (this._collection !== undefined)
+            emitter.emit(constants.ALL, this._collection);
+        else {
+            $.getJSON(config.apiUrl + collection).then(function(models) {
+                me._collection = models;
+                emitter.emit(constants.ALL, models);
+            }).fail(function(e) {
+                emitter.emit(constants.ALL, e);
+            });
+        }
+    };
+    
+    this.create = function(item) {
+        $.post(config.apiUrl + collection, item).then(function() {
+            item.id = _id++;
+            me._collection.push(item);
+            me.all();
+            emitter.emit(constants.CREATE, item);
+        });
+    };
+    
+    dispatcher.register(function(payload) {
+		switch (payload.type) {
+			case constants.ALL:
+				me.all();
+				break;
+            case constants.CREATE:
+                me.create(payload.content);
+                break;
+		}
+	});
+};
+});
+
+require.register("stores/index", function(exports, require, module) {
+[
+    "project"
+].forEach(function(location) {
+    require("stores/" + location);
+});
+});
+
+require.register("stores/project", function(exports, require, module) {
+/* jshint node: true */
+"use strict";
+
+var Project = require("models/project"),
+	BaseStore = require("stores/base"),
 	
-	$scope.onSelect = function(selected) {
-		if (selected.id === 0)
-			$scope.newProject.visible = true;
-	};
-});
-});
+	constants = require("events/constants");
 
-require.register("stores/base", function(exports, require, module) {
-var Config = require("config"),
-	
-	emitter = require("dispatcher/emitter"),
-	dispatcher = require("dispatcher/dispatcher"),
-	constants = require("constants");
-
-app.factory("baseStore", function($timeout, $http) {
-	return function(model, constants, url) {
-		var me = this;
-
-		this.all = function() {
-			return new Promise(function(resolve, reject) {
-				$timeout(function() {
-					emitter.emit(constants.ALL, []);
-				}, 250);
-			});
-		};
-
-		this.update = function(content) {
-			return new Promise(function(resolve) {
-				$timeout(function() {
-					emitter.emit(constants.UPDATE, content);
-					resolve();
-				}, 500);
-			});
-		};
-
-		this.create = function(content) {
-			return new Promise(function(resolve) {
-				$timeout(function() {
-					content.id = -1;
-					emitter.emit(constants.CREATE, content);
-					resolve();
-				}, 500);
-			});
-		};
-
-		this.remove = function(content) {
-			return new Promise(function(resolve) {
-				$timeout(function() {
-					emitter.emit(constants.REMOVE, content);
-					resolve();
-				}, 500);
-			});
-		};
-
-		dispatcher.register(function(payload) {
-			switch (payload.type) {
-				case constants.ALL:
-					me.all();
-					break;
-				case constants.UPDATE:
-					me.update(payload.content);
-					break;
-				case constants.CREATE:
-					me.create(payload.content);
-					break;
-				case constants.REMOVE:
-					me.remove(payload.content);
-					break;
-			}
-		});
-	}
-});
+module.exports = new BaseStore(constants.project, "projects");
 });
 
 require.register("utilities", function(exports, require, module) {

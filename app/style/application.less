@@ -4,12 +4,17 @@
 body { margin:0; padding:0; font-family:@regular-font; font-size:16px; color:#444; background:url(../images/background.png); }
 h1, h2, h3, h4 { padding:0; margin:0; color:black; font-family:@header-font; text-transform:uppercase; font-weight:bold; }
 h1 { font-size:2em; line-height:30px; }
+h2 { font-size:1.5em; }
+h3 { font-size:1.25em; }
 
-header { position:fixed; height:@header-height; width:100%; .gradient(@secondary-colour, darken(@secondary-colour, 10%)); color:white;
+header { position:fixed; height:@header-height; width:100%; background:#333; color:#E8E8E8;
 	>div.menu-trigger { float:left; margin-left:-13px; cursor:pointer; padding-right:@spacing;
 		>i { float:left; font-size:24px !important; margin-top:1px; .vertical-centre(@header-height); }
-		>span { float:left; font-size:32px; font-family:"Droid Serif"; margin-left:8px; .vertical-centre(@header-height); }
+        >div { float:left; width:25px; margin-left:8px; .gradient(@secondary-colour, darken(@secondary-colour, 10%)); .border-radius(5px); padding:0 @small-spacing; margin-top:7px;
+            >span { float:left; width:100%; .vertical-centre(36px); text-align:center; font-size:100%; font-family:"Droid Serif"; font-size:31px; }
+        }
 	}
+    >h2 { float:left; .vertical-centre(@header-height); font-family:"Roboto Condensed"; color:inherit; }
 }
 
 section.content-container { float:left; width:100%; position:relative; top:@header-height; padding:@spacing; .border-box; }

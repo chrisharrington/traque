@@ -1740,7 +1740,7 @@ div.checkbox-container > div.padded-wrapper > div.inner-checkbox-container > div
   border: solid 1px #cccccc;
 }
 div.checkbox-container > div.padded-wrapper > div.inner-checkbox-container > div.check {
-  background: #4abb34;
+  background: #2875c7;
   -webkit-transition: all ease 250ms;
   -moz-transition: all ease 250ms;
   -ms-transition: all ease 250ms;
@@ -1797,7 +1797,7 @@ div.checkbox-container > i {
   float: left;
   width: 20px;
   margin-left: -44px;
-  color: ##333;
+  color: #333333;
   padding: 12px;
   text-align: right;
 }
@@ -1812,7 +1812,7 @@ div.checkbox-container.checked div.check {
   -moz-transform: scale(1, 1) !important;
 }
 div.checkbox-container.checked div.transclude > span {
-  color: ##333 !important;
+  color: #333333 !important;
 }
 
 .shadow {
@@ -1914,24 +1914,47 @@ dropdown > div > div.dropdown-list > div {
   z-index: 2;
   cursor: pointer;
   background: white;
-  max-height: 200px;
+  max-height: 220px;
   overflow-y: scroll;
 }
-dropdown > div > div.dropdown-list > div > span {
+dropdown > div > div.dropdown-list > div > div {
   float: left;
   width: 100%;
   padding: 0 12px;
-  height: 40px;
-  line-height: 40px !important;
-  display: inline-block;
-  vertical-align: middle;
   font-size: 0.875em;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   border-top: solid 1px #EEE;
 }
-dropdown > div > div.dropdown-list > div > span:hover {
+dropdown > div > div.dropdown-list > div > div:hover {
   background: #F0F0F0;
+}
+dropdown > div > div.dropdown-list > div > div.selected {
+  background: #2875c7;
+  color: white;
+}
+dropdown > div > div.dropdown-list > div > div > * {
+  height: 40px;
+  line-height: 40px !important;
+  display: inline-block;
+  vertical-align: middle;
+}
+dropdown > div > div.dropdown-list > div > div > span {
+  float: left;
+  width: 100%;
+  position: relative;
+  padding-right: 32px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+dropdown > div > div.dropdown-list > div > div > i {
+  float: left;
+  width: 20px;
+  margin-left: -20px;
+  display: none;
+}
+dropdown > div > div.dropdown-list > div > div.selected > i {
+  display: inline-block;
 }
 dropdown > div.show > div.dropdown-list {
   transform: scale(1, 1);
@@ -2050,7 +2073,7 @@ menu > div > menu-item {
 }
 menu > div > div.user:hover,
 menu > div > menu-item:hover {
-  background: #404040;
+  background: linear-gradient(to bottom, #2875c7, #1f5c9d);
   color: white;
 }
 
@@ -2320,7 +2343,7 @@ div.text-container > div.focus > div {
   -moz-transform: scale(0, 1);
   height: 2px;
   margin-top: -1px;
-  background: #4abb34;
+  background: #2875c7;
   -webkit-transition: all ease 250ms;
   -moz-transition: all ease 250ms;
   -ms-transition: all ease 250ms;
@@ -2378,7 +2401,7 @@ text.error div.focus > div {
 .timer-container > * {
   float: left;
   width: 100%;
-  margin-top: 24px;
+  margin-top: 12px;
 }
 .timer-container > *:first-child {
   margin-top: 0;
@@ -2446,12 +2469,18 @@ h1 {
   font-size: 2em;
   line-height: 30px;
 }
+h2 {
+  font-size: 1.5em;
+}
+h3 {
+  font-size: 1.25em;
+}
 header {
   position: fixed;
   height: 50px;
   width: 100%;
-  background: linear-gradient(to bottom, #4abb34, #3a9329);
-  color: white;
+  background: #333;
+  color: #E8E8E8;
 }
 header > div.menu-trigger {
   float: left;
@@ -2468,15 +2497,35 @@ header > div.menu-trigger > i {
   display: inline-block;
   vertical-align: middle;
 }
-header > div.menu-trigger > span {
+header > div.menu-trigger > div {
   float: left;
-  font-size: 32px;
-  font-family: "Droid Serif";
+  width: 25px;
   margin-left: 8px;
+  background: linear-gradient(to bottom, #2875c7, #1f5c9d);
+  border-radius: 5px;
+  padding: 0 6px;
+  margin-top: 7px;
+}
+header > div.menu-trigger > div > span {
+  float: left;
+  width: 100%;
+  height: 36px;
+  line-height: 36px !important;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 100%;
+  font-family: "Droid Serif";
+  font-size: 31px;
+}
+header > h2 {
+  float: left;
   height: 50px;
   line-height: 50px !important;
   display: inline-block;
   vertical-align: middle;
+  font-family: "Roboto Condensed";
+  color: inherit;
 }
 section.content-container {
   float: left;
@@ -2534,7 +2583,7 @@ button {
   font-family: "Helvetica", "Arial", "sans-serif";
   text-transform: uppercase;
   color: white;
-  background: linear-gradient(to bottom, #67cf53, #3a9329);
+  background: linear-gradient(to bottom, #488fda, #1f5c9d);
   border: none;
   font-size: 0.875em;
   border-radius: 2px;
@@ -2548,7 +2597,7 @@ button:active {
 }
 button.link {
   background: transparent;
-  color: #4abb34;
+  color: #2875c7;
   font-size: 0.875em;
   box-shadow: none;
 }

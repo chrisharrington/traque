@@ -21,8 +21,11 @@
 		<header>
 			<div class="menu-trigger" ng-click="$root.menuVisible = true;">
 				<i class="fa fa-bars"></i>
-				<span>T</span>
+                <div>
+				    <span>T</span>
+                </div>
 			</div>
+            <h2>{{title}}</h2>
 		</header>
         <menu trigger="menu-trigger" visible="$root.menuVisible"></menu>
 		<section class="content-container" ng-view></section>

@@ -1,64 +1,42 @@
-var Config = require("config"),
-	
-	emitter = require("dispatcher/emitter"),
-	dispatcher = require("dispatcher/dispatcher"),
-	constants = require("constants");
+var dispatcher = require("events/dispatcher"),
+    emitter = require("events/emitter")
+    config = require("config");
 
-app.factory("baseStore", function($timeout, $http) {
-	return function(model, constants, url) {
-		var me = this;
+var _id = 100;
 
-		this.all = function() {
-			return new Promise(function(resolve, reject) {
-				$timeout(function() {
-					emitter.emit(constants.ALL, []);
-				}, 250);
-			});
-		};
-
-		this.update = function(content) {
-			return new Promise(function(resolve) {
-				$timeout(function() {
-					emitter.emit(constants.UPDATE, content);
-					resolve();
-				}, 500);
-			});
-		};
-
-		this.create = function(content) {
-			return new Promise(function(resolve) {
-				$timeout(function() {
-					content.id = -1;
-					emitter.emit(constants.CREATE, content);
-					resolve();
-				}, 500);
-			});
-		};
-
-		this.remove = function(content) {
-			return new Promise(function(resolve) {
-				$timeout(function() {
-					emitter.emit(constants.REMOVE, content);
-					resolve();
-				}, 500);
-			});
-		};
-
-		dispatcher.register(function(payload) {
-			switch (payload.type) {
-				case constants.ALL:
-					me.all();
-					break;
-				case constants.UPDATE:
-					me.update(payload.content);
-					break;
-				case constants.CREATE:
-					me.create(payload.content);
-					break;
-				case constants.REMOVE:
-					me.remove(payload.content);
-					break;
-			}
-		});
-	}
-});
+module.exports = function(constants, collection) {
+    var me = this;
+    
+    this.all = function() {
+        if (this._collection !== undefined)
+            emitter.emit(constants.ALL, this._collection);
+        else {
+            $.getJSON(config.apiUrl + collection).then(function(models) {
+                me._collection = models;
+                emitter.emit(constants.ALL, models);
+            }).fail(function(e) {
+                emitter.emit(constants.ALL, e);
+            });
+        }
+    };
+    
+    this.create = function(item) {
+        $.post(config.apiUrl + collection, item).then(function() {
+            item.id = _id++;
+            me._collection.push(item);
+            me.all();
+            emitter.emit(constants.CREATE, item);
+        });
+    };
+    
+    dispatcher.register(function(payload) {
+		switch (payload.type) {
+			case constants.ALL:
+				me.all();
+				break;
+            case constants.CREATE:
+                me.create(payload.content);
+                break;
+		}
+	});
+};
