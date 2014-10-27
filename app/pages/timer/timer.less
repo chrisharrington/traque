@@ -20,7 +20,7 @@
                 }
             }
             >div.project { float:right; text-decoration:underline; cursor:pointer; }
-            >span { float:left; width:100%; background:white; font-size:3em; font-weight:bold; .border-radius; margin-bottom:@spacing; text-align:center; padding:@spacing 0; }
+            >span.timer { float:left; width:100%; height:40px; background:white; font-size:3em; font-weight:bold; .border-radius; text-align:center; padding:@spacing 0; margin-bottom:@spacing; }
             >button { float:left; width:48%; }
             >button#stop { float:right; }
         }
@@ -28,7 +28,21 @@
     
 	>modal { margin-top:0; }
 	
-	#new-project {
+	#new-project, #change-start-time {
 		text { float:left; width:100%; }
+	}
+	
+	#change-start-time {
+		.content {
+			>text, >span { float:left; }
+			>text { width:47px; text-align:center; }
+			>span.separator { padding:0 @small-spacing; .vertical-centre(@input-height); font-weight:bold; color:black; }
+			>div { float:right;
+				>span { float:left; cursor:pointer; background:white; font-size:0.875em; color:@placeholder-colour; .vertical-centre(@input-height); padding:0 @spacing; .border-radius; margin-left:@spacing;
+					&.selected { background:@secondary-colour; color:white; }
+				}
+			}
+			>span.calculated { float:left; width:100%; margin-top:@spacing; font-size:0.875em; }
+		}
 	}
 }

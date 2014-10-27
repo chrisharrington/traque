@@ -8,17 +8,31 @@
     <div class="timer" ng-class="{ show: timerVisible }">
         <div class="timer-info">
             <span>Start time:</span>
-            <a>12:34 pm</a>
+            <a ng-click="changeStartTime.visible = true">12:34 pm</a>
             <a class="project">{{project.name}}</a>
         </div>
-        <span>{{timer}}</span>
-        <button id="pause">
-            <i class="fa fa-pause"></i>
+        <span class="timer">{{timer}}</span>
+        <button id="pause" ng-click="pause()">
+            <i class="fa" ng-class="{ 'fa-pause': !paused, 'fa-play': paused }"></i>
         </button>
         <button id="stop">
             <i class="fa fa-stop"></i>
         </button>
+		
+		<modal id="change-start-time" visible="changeStartTime.visible" title="Change Start Time" ok="changeStartTime.ok" bindings="changeStartTime">
+			<text type="text" placeholder="hh" ng-model="bindings.newHours"></text>
+			<span class="separator">:</span>
+			<text type="text" placeholder="mm"></text>
+			<span class="separator">:</span>
+			<text type="text" placeholder="ss"></text>
+			<div>
+				<span>am</span>
+				<span class="selected">pm</span>
+			</div>
+			<span class="calculated">New start time: <b>12:34:56 pm</b></span>
+		</modal>
     </div>
+		
     <modal id="new-project" visible="newProject.visible" title="New Project" loading="newProject.loading" ok="newProject.ok" cancel="newProject.cancel">
         <text type="text" placeholder="Project name..." ng-model="newProject.project.name"></text>
     </modal>

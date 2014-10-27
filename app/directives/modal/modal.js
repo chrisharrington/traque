@@ -8,7 +8,8 @@ app.directive("modal", function($rootScope, $timeout) {
 			title: "@",
 			loading: "=",
 			ok: "=",
-			cancel: "="
+			cancel: "=",
+			bindings: "="
 		},
 		link: function(scope, element, attributes) {
 			scope.close = function() {

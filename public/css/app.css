@@ -2308,11 +2308,13 @@ profile-image > img {
 div.text-container {
   float: left;
   width: 100%;
+  text-align: inherit;
 }
 div.text-container > input {
   float: left;
   width: 100%;
   -webkit-appearance: none;
+  text-align: inherit;
   padding: 12px;
   border: none;
   font-size: 0.875em;
@@ -2442,16 +2444,17 @@ text.error div.focus > div {
   text-decoration: underline;
   cursor: pointer;
 }
-.timer-container > div.timer > span {
+.timer-container > div.timer > span.timer {
   float: left;
   width: 100%;
+  height: 40px;
   background: white;
   font-size: 3em;
   font-weight: bold;
   border-radius: 2px;
-  margin-bottom: 12px;
   text-align: center;
   padding: 12px 0;
+  margin-bottom: 12px;
 }
 .timer-container > div.timer > button {
   float: left;
@@ -2463,9 +2466,54 @@ text.error div.focus > div {
 .timer-container > modal {
   margin-top: 0;
 }
-.timer-container #new-project text {
+.timer-container #new-project text,
+.timer-container #change-start-time text {
   float: left;
   width: 100%;
+}
+.timer-container #change-start-time .content > text,
+.timer-container #change-start-time .content > span {
+  float: left;
+}
+.timer-container #change-start-time .content > text {
+  width: 47px;
+  text-align: center;
+}
+.timer-container #change-start-time .content > span.separator {
+  padding: 0 6px;
+  height: 40px;
+  line-height: 40px !important;
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: bold;
+  color: black;
+}
+.timer-container #change-start-time .content > div {
+  float: right;
+}
+.timer-container #change-start-time .content > div > span {
+  float: left;
+  cursor: pointer;
+  background: white;
+  font-size: 0.875em;
+  color: #aaaaaa;
+  height: 40px;
+  line-height: 40px !important;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 12px;
+  border-radius: 2px;
+  margin-left: 12px;
+}
+.timer-container #change-start-time .content > div > span.selected {
+  background: #2875c7;
+  color: white;
+}
+.timer-container #change-start-time .content > span.calculated {
+  float: left;
+  width: 100%;
+  margin-top: 12px;
+  font-size: 0.875em;
 }
 
 .shadow {

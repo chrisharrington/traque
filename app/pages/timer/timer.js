@@ -6,7 +6,7 @@ var ProjectActions = require("actions/project"),
     emitter = require("events/emitter"),
     constants = require("events/constants");
 
-var _next, _seconds;
+var _next, _seconds, _interval;
 
 Controller.create(app, "timer", {
     url: "/timer",
@@ -33,14 +33,17 @@ Controller.create(app, "timer", {
     load: function(rootScope, scope) {
         scope.project = {};
         scope.timer = "00:00:00";
-        scope.newProject = _buildNewProjectContainer(scope);
         scope.timerVisible = false;
+		scope.paused = false;
+		
+		scope.newProject = _buildNewProjectContainer(scope);
+		scope.changeStartTime = _buildChangeStartTimeContainer(scope);
         
         _seconds = 0;
         _getNext(++_seconds);
     },
     
-    methods: function(rootScope, scope, interval) {
+    methods: function(rootScope, scope, interval, timeout) {
         scope.onSelect = function(selected) {
             if (selected.id === 0)
                 scope.newProject.visible = true;
@@ -48,11 +51,20 @@ Controller.create(app, "timer", {
         
         scope.start = function() {
             scope.timerVisible = true;
-            interval(function() {
+			scope.paused = false;
+            _interval = interval(function() {
                 scope.timer = _next;
                 _getNext(++_seconds);
             }, 1000);
         };
+		
+		scope.pause = function() {
+			scope.paused = !scope.paused;
+			if (scope.paused === true)
+				interval.cancel(_interval);
+			else
+				scope.start();
+		};
     }
 });
 
@@ -65,6 +77,17 @@ function _getNext(count) {
     
 function _pad(number) {
     return ("0" + number).slice(-2);
+}
+
+function _buildChangeStartTimeContainer(scope) {
+	return {
+		visible: false,
+		newHours: "12",
+		
+		ok: function() {
+			
+		}
+	}
 }
 
 function _buildNewProjectContainer(scope) {
