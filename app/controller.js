@@ -13,14 +13,14 @@ module.exports = {
             }); 
         });
         
-        app.controller(key, function($scope, $rootScope) {
+        app.controller(key, function($scope, $rootScope, $interval, $timeout) {
             if (_first === true)
                 params.init($rootScope, $scope);
             
             _first = false;
             
-            params.methods($rootScope, $scope);
-            params.load($rootScope, $scope);
+            params.methods($rootScope, $scope, $interval, $timeout);
+            params.load($rootScope, $scope, $interval, $timeout);
         });
     }
 };

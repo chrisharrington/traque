@@ -136,14 +136,14 @@ module.exports = {
             }); 
         });
         
-        app.controller(key, function($scope, $rootScope) {
+        app.controller(key, function($scope, $rootScope, $interval, $timeout) {
             if (_first === true)
                 params.init($rootScope, $scope);
             
             _first = false;
             
-            params.methods($rootScope, $scope);
-            params.load($rootScope, $scope);
+            params.methods($rootScope, $scope, $interval, $timeout);
+            params.load($rootScope, $scope, $interval, $timeout);
         });
     }
 };
@@ -453,6 +453,8 @@ var ProjectActions = require("actions/project"),
     emitter = require("events/emitter"),
     constants = require("events/constants");
 
+var _next, _seconds;
+
 Controller.create(app, "timer", {
     url: "/timer",
     template: "pages/timer.html",
@@ -477,16 +479,40 @@ Controller.create(app, "timer", {
     
     load: function(rootScope, scope) {
         scope.project = {};
+        scope.timer = "00:00:00";
         scope.newProject = _buildNewProjectContainer(scope);
+        scope.timerVisible = false;
+        
+        _seconds = 0;
+        _getNext(++_seconds);
     },
     
-    methods: function(rootScope, scope) {
+    methods: function(rootScope, scope, interval) {
         scope.onSelect = function(selected) {
             if (selected.id === 0)
                 scope.newProject.visible = true;
-        }
+        };
+        
+        scope.start = function() {
+            scope.timerVisible = true;
+            interval(function() {
+                scope.timer = _next;
+                _getNext(++_seconds);
+            }, 1000);
+        };
     }
 });
+
+function _getNext(count) {
+    var seconds = count%60;
+    var minutes = Math.floor(count/60);
+    var hours = Math.floor(count/3600);
+    _next = _pad(hours) + ":" + _pad(minutes) + ":" + _pad(seconds);
+}
+    
+function _pad(number) {
+    return ("0" + number).slice(-2);
+}
 
 function _buildNewProjectContainer(scope) {
     return {
@@ -537,6 +563,55 @@ module.exports = function(constants, collection) {
             me._collection.push(item);
             me.all();
             emitter.emit(constants.CREATE, item);
+        });
+    };
+    
+    dispatcher.register(function(payload) {
+		switch (payload.type) {
+			case constants.ALL:
+				me.all();
+				break;
+            case constants.CREATE:
+                me.create(payload.content);
+                break;
+		}
+	});
+};
+});
+
+require.register("stores/collection", function(exports, require, module) {
+var dispatcher = require("events/dispatcher"),
+    constants = require("events/constants");
+
+module.exports = function() {
+    this._collection = [], me = this;
+    
+    this.all = function() {
+        return new Promise(function(resolve, reject) {
+            setTimeout(function() {
+                resolve(me._collection);
+            }, 500);
+        });
+    };
+    
+    this.create = function(item) {
+        return new Promise(function(resolve, reject) {
+            setTimeout(function() {
+                me._collection.push(item);
+                resolve();
+            }, 500);
+        });
+    };
+    
+    this.remove = function(item) {
+        return new Promise(function(resolve, reject) {
+            var found = _.find(me._collection, function(x) { return x.id === item.id; });
+            if (!found)
+                resolve();
+            else
+                setTimeout(function() {
+                    me._collection = _.filter(me._collection, function(x) { x.id !== item.id; });
+                }, 500);
         });
     };
     

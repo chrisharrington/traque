@@ -2,10 +2,30 @@
 @import "../../style/mixins.less";
 
 .timer-container {
-	>* { float:left; width:100%; margin-top:@spacing;
-		&:first-child { margin-top:0; }
-	}
-	
+    >div { float:left; width:100%; display:none;
+        &.show { display:block; }
+        
+        &.no-timer {
+            >* { margin-top:@spacing; }
+        }
+        >* { float:left; width:100%;
+            &:first-child { margin-top:0; }
+        }
+        
+        &.timer {
+            >div.timer-info { float:left; font-size:0.75em;
+                >span { float:left; font-weight:bold; text-transform:uppercase; }
+                >a { float:left; padding-left:@spacing; padding-right:@spacing; padding-bottom:@spacing; text-decoration:underline; cursor:pointer;
+                    &.project { float:right; padding-right:0;}
+                }
+            }
+            >div.project { float:right; text-decoration:underline; cursor:pointer; }
+            >span { float:left; width:100%; background:white; font-size:3em; font-weight:bold; .border-radius; margin-bottom:@spacing; text-align:center; padding:@spacing 0; }
+            >button { float:left; width:48%; }
+            >button#stop { float:right; }
+        }
+    }
+    
 	>modal { margin-top:0; }
 	
 	#new-project {

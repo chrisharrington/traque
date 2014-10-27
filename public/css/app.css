@@ -2241,7 +2241,7 @@ modal > div.content-container.show {
   -o-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
 }
-modal > div.content-container > h1 {
+modal > div.content-container > h2 {
   float: left;
   width: 100%;
   box-sizing: border-box;
@@ -2398,13 +2398,67 @@ text.error div.focus > div {
 .deleted {
   opacity: 0.6;
 }
-.timer-container > * {
+.timer-container > div {
   float: left;
   width: 100%;
+  display: none;
+}
+.timer-container > div.show {
+  display: block;
+}
+.timer-container > div.no-timer > * {
   margin-top: 12px;
 }
-.timer-container > *:first-child {
+.timer-container > div > * {
+  float: left;
+  width: 100%;
+}
+.timer-container > div > *:first-child {
   margin-top: 0;
+}
+.timer-container > div.timer > div.timer-info {
+  float: left;
+  font-size: 0.75em;
+}
+.timer-container > div.timer > div.timer-info > span {
+  float: left;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.timer-container > div.timer > div.timer-info > a {
+  float: left;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.timer-container > div.timer > div.timer-info > a.project {
+  float: right;
+  padding-right: 0;
+}
+.timer-container > div.timer > div.project {
+  float: right;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.timer-container > div.timer > span {
+  float: left;
+  width: 100%;
+  background: white;
+  font-size: 3em;
+  font-weight: bold;
+  border-radius: 2px;
+  margin-bottom: 12px;
+  text-align: center;
+  padding: 12px 0;
+}
+.timer-container > div.timer > button {
+  float: left;
+  width: 48%;
+}
+.timer-container > div.timer > button#stop {
+  float: right;
 }
 .timer-container > modal {
   margin-top: 0;

@@ -1,9 +1,24 @@
 <div class="timer-container">
-    <dropdown placeholder="Project..." list="projects" property="name" change="onSelect" selected="project"></dropdown>
-	<button>
-		<i class="fa fa-play"></i>
-	</button>
-    
+    <div class="no-timer" ng-class="{ show: !timerVisible }">
+        <dropdown placeholder="Project..." list="projects" property="name" change="onSelect" selected="project"></dropdown>
+        <button ng-click="start()">
+            <i class="fa fa-play"></i>
+        </button>
+    </div>
+    <div class="timer" ng-class="{ show: timerVisible }">
+        <div class="timer-info">
+            <span>Start time:</span>
+            <a>12:34 pm</a>
+            <a class="project">{{project.name}}</a>
+        </div>
+        <span>{{timer}}</span>
+        <button id="pause">
+            <i class="fa fa-pause"></i>
+        </button>
+        <button id="stop">
+            <i class="fa fa-stop"></i>
+        </button>
+    </div>
     <modal id="new-project" visible="newProject.visible" title="New Project" loading="newProject.loading" ok="newProject.ok" cancel="newProject.cancel">
         <text type="text" placeholder="Project name..." ng-model="newProject.project.name"></text>
     </modal>
