@@ -50,6 +50,8 @@ Controller.create(app, "timer", {
         };
         
         scope.start = function() {
+            scope.changeStartTime.start = _start = new Date();
+            
             scope.timerVisible = true;
 			scope.paused = false;
             _interval = interval(function() {

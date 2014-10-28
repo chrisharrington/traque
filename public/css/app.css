@@ -2447,7 +2447,6 @@ text.error div.focus > div {
 .timer-container > div.timer > span.timer {
   float: left;
   width: 100%;
-  height: 40px;
   background: white;
   font-size: 3em;
   font-weight: bold;
@@ -2503,7 +2502,6 @@ text.error div.focus > div {
   vertical-align: middle;
   padding: 0 12px;
   border-radius: 2px;
-  margin-left: 12px;
 }
 .timer-container #change-start-time .content > div > span.selected {
   background: #2875c7;
