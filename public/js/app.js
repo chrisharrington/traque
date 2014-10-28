@@ -337,15 +337,16 @@ app.directive("text", function() {
 			tab: "@tabindex",
 			focus: "@",
 			value: "&",
-			ngModel: "="
+			ngModel: "=",
+			bindings: "="
 		},
-		compile: function(element) {
-			$(element).on("focus", "input", function() {
-				$(element).addClass("focus");
+		link: function(scope, element, attributes) {
+			element.find("input").on("focus", function() {
+				element.addClass("focus");
 			});
 
-			$(element).on("blur", "input", function() {
-				$(element).removeClass("focus");
+			element.find("input").on("blur", function() {
+				element.removeClass("focus");
 			});
 		}
 	}
