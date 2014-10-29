@@ -11,7 +11,7 @@ app.directive("text", function() {
 			value: "&",
 			ngModel: "="
 		},
-		compile: function(element) {
+		link: function(scope, element) {
 			$(element).on("focus", "input", function() {
 				$(element).addClass("focus");
 			});

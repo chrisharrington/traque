@@ -8,7 +8,9 @@
     <div class="timer" ng-class="{ show: timerVisible }">
         <div class="timer-info">
             <span>Start time:</span>
-            <a ng-click="changeStartTime.visible = true">12:34 pm</a>
+            <a ng-click="changeStartTime.visible = true">
+                <time value="changeStartTime.start"></time>
+            </a>
             <a class="project">{{project.name}}</a>
         </div>
         <span class="timer">{{timer}}</span>
@@ -19,17 +21,16 @@
             <i class="fa fa-stop"></i>
         </button>
 		
-		<modal id="change-start-time" visible="changeStartTime.visible" title="Change Start Time" ok="changeStartTime.ok" bindings="changeStartTime">
-			<text type="text" placeholder="hh" ng-model="bindings.newHours"></text>
+		<modal id="change-start-time" visible="changeStartTime.visible" title="Change Start Time" ok="changeStartTime.ok">
+			<text type="text" placeholder="hh" ng-model="changeStartTime.hours"></text>
 			<span class="separator">:</span>
-			<text type="text" placeholder="mm"></text>
+			<text type="text" placeholder="mm" ng-model="changeStartTime.minutes"></text>
 			<span class="separator">:</span>
-			<text type="text" placeholder="ss"></text>
+			<text type="text" placeholder="ss" ng-model="changeStartTime.seconds"></text>
 			<div>
-				<span>am</span>
-				<span class="selected">pm</span>
+				<span ng-class="{ selected: !changeStartTime.isPM }" ng-click="changeStartTime.isPM = false">am</span>
+				<span ng-class="{ selected: changeStartTime.isPM }" ng-click="changeStartTime.isPM = true">pm</span>
 			</div>
-			<span class="calculated">New start time: <b>12:34:56 pm</b></span>
 		</modal>
     </div>
 		

@@ -50,7 +50,8 @@ Controller.create(app, "timer", {
         };
         
         scope.start = function() {
-            scope.changeStartTime.start = _start = new Date();
+            _start = new Date();
+            scope.changeStartTime.update(_start);
             
             scope.timerVisible = true;
 			scope.paused = false;
@@ -84,10 +85,34 @@ function _pad(number) {
 function _buildChangeStartTimeContainer(scope) {
 	return {
 		visible: false,
-		newHours: "12",
+        hours: "",
+        minutes: "",
+        seconds: "",
+        isPM: false,
+        label: "",
+        
+        update: function(time) {
+            this.start = time;
+            
+            var hours = time.getHours(), isPM = false;
+            if (hours > 12) {
+                hours -= 12;
+                isPM = true;
+            }
+            
+            this.hours = hours;
+            this.minutes = _pad(time.getMinutes());
+            this.seconds = _pad(time.getSeconds());
+            this.isPM = isPM;
+        },
 		
 		ok: function() {
-			
+            var date = new Date();
+            date.setHours(this.isPM ? (this.hours + 12) : this.hours);
+            date.setMinutes(this.minutes);
+            date.setSeconds(this.seconds);
+			this.start = _start = date;
+            this.visible = false;
 		}
 	}
 }
