@@ -1,7 +1,7 @@
 {
     "apps": [
         {
-            "name": "example",
+            "name": "traque",
             "script": "node_modules/brunch/bin/brunch",
             "args": "['watch', '--server']",
             "exec_mode"  : "fork_mode"

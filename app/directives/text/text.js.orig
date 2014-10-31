@@ -9,15 +9,22 @@ app.directive("text", function() {
 			tab: "@tabindex",
 			focus: "@",
 			value: "&",
-			ngModel: "="
+			ngModel: "=",
+			bindings: "="
 		},
+<<<<<<< HEAD
+		link: function(scope, element, attributes) {
+			element.find("input").on("focus", function() {
+				element.addClass("focus");
+=======
 		link: function(scope, element) {
 			$(element).on("focus", "input", function() {
 				$(element).addClass("focus");
+>>>>>>> 0c2eb970443ff18aeb8cbedfa9c1184e4454749c
 			});
 
-			$(element).on("blur", "input", function() {
-				$(element).removeClass("focus");
+			element.find("input").on("blur", function() {
+				element.removeClass("focus");
 			});
 		}
 	}

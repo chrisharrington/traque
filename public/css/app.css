@@ -2400,6 +2400,82 @@ text.error div.focus > div {
 .deleted {
   opacity: 0.6;
 }
+#change-start-time .content > text,
+#change-start-time .content > span {
+  float: left;
+}
+#change-start-time .content > text {
+  width: 47px;
+  text-align: center;
+}
+#change-start-time .content > span.separator {
+  padding: 0 6px;
+  height: 40px;
+  line-height: 40px !important;
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: bold;
+  color: black;
+}
+#change-start-time .content > div {
+  float: right;
+}
+#change-start-time .content > div > span {
+  float: left;
+  cursor: pointer;
+  background: white;
+  font-size: 0.875em;
+  color: #aaaaaa;
+  height: 40px;
+  line-height: 40px !important;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 12px;
+  border-radius: 2px;
+}
+#change-start-time .content > div > span.selected {
+  background: #2875c7;
+  color: white;
+}
+#change-start-time .content > span.calculated {
+  float: left;
+  width: 100%;
+  margin-top: 12px;
+  font-size: 0.875em;
+}
+
+.shadow {
+  box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
+}
+.dark-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.border {
+  border: solid 1px #cccccc;
+}
+.border-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hidden {
+  display: none !important;
+}
+.tile {
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
+  border-radius: 2px;
+  background: #ffffff;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.deleted {
+  opacity: 0.6;
+}
 .timer-container > div {
   float: left;
   width: 100%;
@@ -2447,7 +2523,6 @@ text.error div.focus > div {
 .timer-container > div.timer > span.timer {
   float: left;
   width: 100%;
-  height: 40px;
   background: white;
   font-size: 3em;
   font-weight: bold;
@@ -2466,54 +2541,9 @@ text.error div.focus > div {
 .timer-container > modal {
   margin-top: 0;
 }
-.timer-container #new-project text,
-.timer-container #change-start-time text {
+.timer-container #new-project text {
   float: left;
   width: 100%;
-}
-.timer-container #change-start-time .content > text,
-.timer-container #change-start-time .content > span {
-  float: left;
-}
-.timer-container #change-start-time .content > text {
-  width: 47px;
-  text-align: center;
-}
-.timer-container #change-start-time .content > span.separator {
-  padding: 0 6px;
-  height: 40px;
-  line-height: 40px !important;
-  display: inline-block;
-  vertical-align: middle;
-  font-weight: bold;
-  color: black;
-}
-.timer-container #change-start-time .content > div {
-  float: right;
-}
-.timer-container #change-start-time .content > div > span {
-  float: left;
-  cursor: pointer;
-  background: white;
-  font-size: 0.875em;
-  color: #aaaaaa;
-  height: 40px;
-  line-height: 40px !important;
-  display: inline-block;
-  vertical-align: middle;
-  padding: 0 12px;
-  border-radius: 2px;
-  margin-left: 12px;
-}
-.timer-container #change-start-time .content > div > span.selected {
-  background: #2875c7;
-  color: white;
-}
-.timer-container #change-start-time .content > span.calculated {
-  float: left;
-  width: 100%;
-  margin-top: 12px;
-  font-size: 0.875em;
 }
 
 .shadow {

@@ -11,5 +11,9 @@ require.define({
 
     "flux": function (require, exports, module) {
         return module.exports = Flux;
-    }
+    },
+	
+	"moment": function(require, exports, module) {
+		return module.exports = moment;
+	};
 });

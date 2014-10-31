@@ -1,3 +1,6 @@
-["timer/timer"].forEach(function(location) {
+[
+    "timer/timer",
+    "timer/changeStartTime"
+].forEach(function(location) {
 	require("pages/" + location);
 });

@@ -1,0 +1,11 @@
+<modal id="change-start-time" visible="visible" title="Change Start Time" ok="ok">
+    <text type="text" placeholder="hh" ng-model="time.hours"></text>
+    <span class="separator">:</span>
+    <text type="text" placeholder="mm" ng-model="time.minutes"></text>
+    <span class="separator">:</span>
+    <text type="text" placeholder="ss" ng-model="time.seconds"></text>
+    <div>
+        <span ng-class="{ selected: !time.isPM }" ng-click="time.isPM = false">am</span>
+        <span ng-class="{ selected: time.isPM }" ng-click="time.isPM = true">pm</span>
+    </div>
+</modal>

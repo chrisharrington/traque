@@ -338,15 +338,22 @@ app.directive("text", function() {
 			tab: "@tabindex",
 			focus: "@",
 			value: "&",
-			ngModel: "="
+			ngModel: "=",
+			bindings: "="
 		},
+<<<<<<< HEAD
+		link: function(scope, element, attributes) {
+			element.find("input").on("focus", function() {
+				element.addClass("focus");
+=======
 		link: function(scope, element) {
 			$(element).on("focus", "input", function() {
 				$(element).addClass("focus");
+>>>>>>> 0c2eb970443ff18aeb8cbedfa9c1184e4454749c
 			});
 
-			$(element).on("blur", "input", function() {
-				$(element).removeClass("focus");
+			element.find("input").on("blur", function() {
+				element.removeClass("focus");
 			});
 		}
 	}
@@ -363,18 +370,15 @@ app.directive("time", function() {
         },
         link: function(scope) {
             scope.$watch("value", function(value) {
-				if (value === undefined || value === "")
+                if (value === undefined || value === "")
                     return;
 
-                var isPM = false;
+                var isPM = true;
                 var hours = value.getHours();
-				if (hours >= 12) {
-					isPM = true;
-					hours -= 12;
-				}
-				if (hours === 0) {
-					hours = 12;
-				}
+                if (hours < 12)
+                    isPM = false;
+                if (hours > 12)
+                    hours -= 12;
 
                 scope.time = hours + ":" + _pad(scope.value.getMinutes()) + ":" + _pad(scope.value.getSeconds()) + " " + (isPM ? "pm" : "am");
             });
@@ -531,8 +535,6 @@ app.directive("changeStartTime", function() {
                     isPM = false;
                 if (hours > 12)
                     hours -= 12;
-				if (hours === 0)
-					hours = 12;
 
                 scope.time.hours = hours;
                 scope.time.minutes = start.getMinutes().pad();
@@ -542,13 +544,7 @@ app.directive("changeStartTime", function() {
             
             scope.ok = function() {
                 var date = new Date(), hours = parseInt(scope.time.hours);
-				if (scope.time.isPM)
-					hours += 12;
-				if (hours === 24)
-					hours = 12;
-				if (!scope.time.isPM && hours === 12)
-					hours = 0;
-                date.setHours(hours);
+                date.setHours(scope.time.isPM ? hours : (hours - 12));
                 date.setMinutes(parseInt(scope.time.minutes));
                 date.setSeconds(parseInt(scope.time.seconds));
                 scope.start = date;
@@ -606,19 +602,10 @@ Controller.create(app, "timer", {
         _seconds = 0;
         _getNext(++_seconds);
         
-        scope.$watch("startTime", function(start) {
-			if (start === undefined || isNaN(start.getTime()))
-				return;
-			
-			var first = new Date().getTime();
-			var second = start.getTime();
-			var difference = first - second;
-			var seconds = difference/1000;
-			
-            _seconds = Math.ceil((new Date().getTime() - start.getTime())/1000);
-            _getNext(++_seconds);
-			scope.timer = _next;
-        });
+//        scope.$watch("start", function(start) {
+//            _seconds = (new Date() - start)/60/1000;
+//            _getNext(_seconds);
+//        });
     },
     
     methods: function(rootScope, scope, interval, timeout) {
@@ -650,7 +637,7 @@ Controller.create(app, "timer", {
 
 function _getNext(count) {
     var seconds = count%60;
-    var minutes = Math.floor(count/60)%60;
+    var minutes = Math.floor(count/60);
     var hours = Math.floor(count/3600);
     _next = _pad(hours) + ":" + _pad(minutes) + ":" + _pad(seconds);
 }

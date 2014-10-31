@@ -10,7 +10,7 @@ var _next, _seconds, _interval;
 
 Controller.create(app, "timer", {
     url: "/timer",
-    template: "pages/timer.html",
+    template: "pages/timer/timer.html",
     title: "Timer"
 }, {
     init: function(rootScope, scope) {
@@ -33,14 +33,25 @@ Controller.create(app, "timer", {
     load: function(rootScope, scope) {
         scope.project = {};
         scope.timer = "00:00:00";
-        scope.timerVisible = false;
+        
 		scope.paused = false;
+        
+        scope.timerVisible = false;
+        scope.changeStartTimeVisible = false;
 		
 		scope.newProject = _buildNewProjectContainer(scope);
-		scope.changeStartTime = _buildChangeStartTimeContainer(scope);
         
         _seconds = 0;
         _getNext(++_seconds);
+        
+        scope.$watch("startTime", function(start) {
+			if (start === undefined || isNaN(start.getTime()))
+				return;
+			
+            _seconds = Math.round(moment.duration(new Date().getTime() - start.getTime()).asSeconds());
+            _getNext(++_seconds);
+			scope.timer = _next;
+        });
     },
     
     methods: function(rootScope, scope, interval, timeout) {
@@ -50,8 +61,10 @@ Controller.create(app, "timer", {
         };
         
         scope.start = function() {
+            scope.startTime = new Date();
             scope.timerVisible = true;
 			scope.paused = false;
+            
             _interval = interval(function() {
                 scope.timer = _next;
                 _getNext(++_seconds);
@@ -70,24 +83,13 @@ Controller.create(app, "timer", {
 
 function _getNext(count) {
     var seconds = count%60;
-    var minutes = Math.floor(count/60);
+    var minutes = Math.floor(count/60)%60;
     var hours = Math.floor(count/3600);
     _next = _pad(hours) + ":" + _pad(minutes) + ":" + _pad(seconds);
 }
     
 function _pad(number) {
     return ("0" + number).slice(-2);
-}
-
-function _buildChangeStartTimeContainer(scope) {
-	return {
-		visible: false,
-		newHours: "12",
-		
-		ok: function() {
-			
-		}
-	}
 }
 
 function _buildNewProjectContainer(scope) {
