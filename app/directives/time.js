@@ -10,12 +10,12 @@ app.directive("time", function() {
                 if (value === undefined || value === "")
                     return;
 
-                var isPM = false;
+                var isPM = true;
                 var hours = value.getHours();
-                if (hours > 12) {
+                if (hours < 12)
+                    isPM = false;
+                if (hours > 12)
                     hours -= 12;
-                    isPM = true;
-                }
 
                 scope.time = hours + ":" + _pad(scope.value.getMinutes()) + ":" + _pad(scope.value.getSeconds()) + " " + (isPM ? "pm" : "am");
             });

@@ -10,7 +10,7 @@ var _next, _seconds, _interval;
 
 Controller.create(app, "timer", {
     url: "/timer",
-    template: "pages/timer.html",
+    template: "pages/timer/timer.html",
     title: "Timer"
 }, {
     init: function(rootScope, scope) {
@@ -33,14 +33,21 @@ Controller.create(app, "timer", {
     load: function(rootScope, scope) {
         scope.project = {};
         scope.timer = "00:00:00";
-        scope.timerVisible = false;
+        
 		scope.paused = false;
+        
+        scope.timerVisible = false;
+        scope.changeStartTimeVisible = false;
 		
 		scope.newProject = _buildNewProjectContainer(scope);
-		scope.changeStartTime = _buildChangeStartTimeContainer(scope);
         
         _seconds = 0;
         _getNext(++_seconds);
+        
+//        scope.$watch("start", function(start) {
+//            _seconds = (new Date() - start)/60/1000;
+//            _getNext(_seconds);
+//        });
     },
     
     methods: function(rootScope, scope, interval, timeout) {
@@ -50,11 +57,10 @@ Controller.create(app, "timer", {
         };
         
         scope.start = function() {
-            _start = new Date();
-            scope.changeStartTime.update(_start);
-            
+            scope.startTime = new Date();
             scope.timerVisible = true;
 			scope.paused = false;
+            
             _interval = interval(function() {
                 scope.timer = _next;
                 _getNext(++_seconds);
@@ -80,41 +86,6 @@ function _getNext(count) {
     
 function _pad(number) {
     return ("0" + number).slice(-2);
-}
-
-function _buildChangeStartTimeContainer(scope) {
-	return {
-		visible: false,
-        hours: "",
-        minutes: "",
-        seconds: "",
-        isPM: false,
-        label: "",
-        
-        update: function(time) {
-            this.start = time;
-            
-            var hours = time.getHours(), isPM = false;
-            if (hours > 12) {
-                hours -= 12;
-                isPM = true;
-            }
-            
-            this.hours = hours;
-            this.minutes = _pad(time.getMinutes());
-            this.seconds = _pad(time.getSeconds());
-            this.isPM = isPM;
-        },
-		
-		ok: function() {
-            var date = new Date();
-            date.setHours(this.isPM ? (this.hours + 12) : this.hours);
-            date.setMinutes(this.minutes);
-            date.setSeconds(this.seconds);
-			this.start = _start = date;
-            this.visible = false;
-		}
-	}
 }
 
 function _buildNewProjectContainer(scope) {

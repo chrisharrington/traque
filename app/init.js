@@ -1,6 +1,7 @@
 require("pages");
 require("directives");
 require("stores");
+require("extensions");
 
 app.config(function($routeProvider) {
 	$routeProvider.otherwise({ redirectTo: "/timer" });

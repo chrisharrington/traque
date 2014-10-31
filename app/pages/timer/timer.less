@@ -28,21 +28,7 @@
     
 	>modal { margin-top:0; }
 	
-	#new-project, #change-start-time {
+	#new-project {
 		text { float:left; width:100%; }
-	}
-	
-	#change-start-time {
-		.content {
-			>text, >span { float:left; }
-			>text { width:47px; text-align:center; }
-			>span.separator { padding:0 @small-spacing; .vertical-centre(@input-height); font-weight:bold; color:black; }
-			>div { float:right;
-				>span { float:left; cursor:pointer; background:white; font-size:0.875em; color:@placeholder-colour; .vertical-centre(@input-height); padding:0 @spacing; .border-radius;
-					&.selected { background:@secondary-colour; color:white; }
-				}
-			}
-			>span.calculated { float:left; width:100%; margin-top:@spacing; font-size:0.875em; }
-		}
 	}
 }

@@ -366,12 +366,12 @@ app.directive("time", function() {
                 if (value === undefined || value === "")
                     return;
 
-                var isPM = false;
+                var isPM = true;
                 var hours = value.getHours();
-                if (hours > 12) {
+                if (hours < 12)
+                    isPM = false;
+                if (hours > 12)
                     hours -= 12;
-                    isPM = true;
-                }
 
                 scope.time = hours + ":" + _pad(scope.value.getMinutes()) + ":" + _pad(scope.value.getSeconds()) + " " + (isPM ? "pm" : "am");
             });
@@ -431,10 +431,27 @@ module.exports = new function() {
 };
 });
 
-require.register("init", function(exports, require, module) {
+require.register("extensions/index", function(exports, require, module) {
+["number"].forEach(function(location) {
+    require("extensions/" + location);
+});
+});
+
+require.register("extensions/number", function(exports, require, module) {
+Number.prototype.pad = function(length, char) {
+    if (length === undefined)
+        length = 2;
+    if (char === undefined)
+        char = "0";
+    return (char + this).slice(length * -1);
+}
+});
+
+;require.register("init", function(exports, require, module) {
 require("pages");
 require("directives");
 require("stores");
+require("extensions");
 
 app.config(function($routeProvider) {
 	$routeProvider.otherwise({ redirectTo: "/timer" });
@@ -472,8 +489,62 @@ module.exports = BaseModel;
 });
 
 require.register("pages/index", function(exports, require, module) {
-["timer/timer"].forEach(function(location) {
+[
+    "timer/timer",
+    "timer/changeStartTime"
+].forEach(function(location) {
 	require("pages/" + location);
+});
+});
+
+require.register("pages/timer/changeStartTime", function(exports, require, module) {
+var Project = require("models/project"),
+    ProjectActions = require("actions/project");
+
+app.directive("changeStartTime", function() {
+    return {
+        restrict: "E",
+        templateUrl: "pages/timer/changeStartTime.html",
+        scope: {
+            visible: "=",
+            start: "="
+        },
+        link: function(scope) {
+            scope.label = "";
+
+            scope.time = {
+                hours: "",
+                minutes: "",
+                seconds: "",
+                isPM: true
+            };
+            
+            scope.$watch("start", function(start) {
+                if (start === undefined)
+                    return;
+                
+                var hours = start.getHours(), isPM = scope.time.isPM || false;
+                if (hours < 12)
+                    isPM = false;
+                if (hours > 12)
+                    hours -= 12;
+
+                scope.time.hours = hours;
+                scope.time.minutes = start.getMinutes().pad();
+                scope.time.seconds = start.getSeconds().pad();
+                scope.time.isPM = isPM;
+            });
+            
+            scope.ok = function() {
+                var date = new Date(), hours = parseInt(scope.time.hours);
+                date.setHours(scope.time.isPM ? hours : (hours - 12));
+                date.setMinutes(parseInt(scope.time.minutes));
+                date.setSeconds(parseInt(scope.time.seconds));
+                scope.start = date;
+                scope.visible = false;
+            };
+        }
+    }
 });
 });
 
@@ -490,7 +561,7 @@ var _next, _seconds, _interval;
 
 Controller.create(app, "timer", {
     url: "/timer",
-    template: "pages/timer.html",
+    template: "pages/timer/timer.html",
     title: "Timer"
 }, {
     init: function(rootScope, scope) {
@@ -513,14 +584,21 @@ Controller.create(app, "timer", {
     load: function(rootScope, scope) {
         scope.project = {};
         scope.timer = "00:00:00";
-        scope.timerVisible = false;
+        
 		scope.paused = false;
+        
+        scope.timerVisible = false;
+        scope.changeStartTimeVisible = false;
 		
 		scope.newProject = _buildNewProjectContainer(scope);
-		scope.changeStartTime = _buildChangeStartTimeContainer(scope);
         
         _seconds = 0;
         _getNext(++_seconds);
+        
+//        scope.$watch("start", function(start) {
+//            _seconds = (new Date() - start)/60/1000;
+//            _getNext(_seconds);
+//        });
     },
     
     methods: function(rootScope, scope, interval, timeout) {
@@ -530,11 +608,10 @@ Controller.create(app, "timer", {
         };
         
         scope.start = function() {
-            _start = new Date();
-            scope.changeStartTime.update(_start);
-            
+            scope.startTime = new Date();
             scope.timerVisible = true;
 			scope.paused = false;
+            
             _interval = interval(function() {
                 scope.timer = _next;
                 _getNext(++_seconds);
@@ -560,41 +637,6 @@ function _getNext(count) {
     
 function _pad(number) {
     return ("0" + number).slice(-2);
-}
-
-function _buildChangeStartTimeContainer(scope) {
-	return {
-		visible: false,
-        hours: "",
-        minutes: "",
-        seconds: "",
-        isPM: false,
-        label: "",
-        
-        update: function(time) {
-            this.start = time;
-            
-            var hours = time.getHours(), isPM = false;
-            if (hours > 12) {
-                hours -= 12;
-                isPM = true;
-            }
-            
-            this.hours = hours;
-            this.minutes = _pad(time.getMinutes());
-            this.seconds = _pad(time.getSeconds());
-            this.isPM = isPM;
-        },
-		
-		ok: function() {
-            var date = new Date();
-            date.setHours(this.isPM ? (this.hours + 12) : this.hours);
-            date.setMinutes(this.minutes);
-            date.setSeconds(this.seconds);
-			this.start = _start = date;
-            this.visible = false;
-		}
-	}
 }
 
 function _buildNewProjectContainer(scope) {
