@@ -149,6 +149,76 @@ module.exports = {
 };
 });
 
+require.register("directives/calendar/calendar", function(exports, require, module) {
+var moment = require("moment"),
+    _ = require("underscore");
+
+app.directive("calendar", function() {
+    return {
+        restrict: "E",
+        templateUrl: "directives/calendar.html",
+        scope: {
+            selected: "="
+        },
+        link: function(scope) {
+            scope.selected = (scope.selected || moment()).hours(0).minutes(0).seconds(0).milliseconds(0);
+            scope.month = scope.selected.clone();
+            
+            var start = scope.selected.clone();
+            start.date(1);
+            start.day(0).hour(0).minute(0).second(0).millisecond(0);
+            
+            _buildMonth(scope, start, scope.month);
+            
+            scope.select = function(day) {
+                scope.selected = day.date;  
+            };
+            
+            scope.next = function() {
+                var next = scope.month.clone();
+                next.month(next.month()+1).date(1).day(0).hour(0).minute(0).second(0).millisecond(0);
+                scope.month.month(scope.month.month()+1);
+                _buildMonth(scope, next, scope.month);
+            };
+            
+            scope.previous = function() {
+                var previous = scope.month.clone();
+                previous.month(previous.month()-1).date(1).day(0).hour(0).minute(0).second(0).millisecond(0);
+                scope.month.month(scope.month.month()-1);
+                _buildMonth(scope, previous, scope.month);
+            };
+        }
+    };
+    
+    function _buildMonth(scope, start, month) {
+        scope.weeks = [];
+        var done = false, date = start.clone(), monthIndex = date.month(), count = 0;
+        while (!done) {
+            scope.weeks.push({ days: _buildWeek(date.clone(), month) });
+            date.add(1, "w");
+            done = count++ > 2 && monthIndex !== date.month();
+            monthIndex = date.month();
+        }
+    }
+        
+    function _buildWeek(date, month) {
+        var days = [];
+        for (var i = 0; i < 7; i++) {
+            days.push({
+                name: date.format("dd").substring(0, 1),
+                number: date.date(),
+                isCurrentMonth: date.month() === month.month(),
+                isToday: date.isSame(new Date(), "day"),
+                date: date
+            });
+            date = date.clone();
+            date.add(1, "d");
+        }
+        return days;
+    }
+});
+});
+
 require.register("directives/checkbox/checkbox", function(exports, require, module) {
 app.directive("checkbox", function($sce) {
 	return {
@@ -230,7 +300,8 @@ require.register("directives/index", function(exports, require, module) {
 	"checkbox/checkbox",
 	"text/text",
     "modal/modal",
-    "time"
+    "time",
+    "calendar/calendar"
 ].forEach(function(location) {
 	require("directives/" + location);
 })
@@ -366,17 +437,7 @@ app.directive("time", function() {
 				if (value === undefined || value === "")
                     return;
 
-                var isPM = false;
-                var hours = value.getHours();
-				if (hours >= 12) {
-					isPM = true;
-					hours -= 12;
-				}
-				if (hours === 0) {
-					hours = 12;
-				}
-
-                scope.time = hours + ":" + _pad(scope.value.getMinutes()) + ":" + _pad(scope.value.getSeconds()) + " " + (isPM ? "pm" : "am");
+                scope.time = moment(value).format("h:mm:ss a");
             });
         }
     } 
@@ -502,7 +563,9 @@ require.register("pages/index", function(exports, require, module) {
 
 require.register("pages/timer/changeStartTime", function(exports, require, module) {
 var Project = require("models/project"),
-    ProjectActions = require("actions/project");
+    ProjectActions = require("actions/project"),
+	
+	moment = require("moment");
 
 app.directive("changeStartTime", function() {
     return {
@@ -516,6 +579,7 @@ app.directive("changeStartTime", function() {
             scope.label = "";
 
             scope.time = {
+                day: moment(),
                 hours: "",
                 minutes: "",
                 seconds: "",
@@ -526,32 +590,15 @@ app.directive("changeStartTime", function() {
                 if (start === undefined)
                     return;
                 
-                var hours = start.getHours(), isPM = scope.time.isPM || false;
-                if (hours < 12)
-                    isPM = false;
-                if (hours > 12)
-                    hours -= 12;
-				if (hours === 0)
-					hours = 12;
-
-                scope.time.hours = hours;
-                scope.time.minutes = start.getMinutes().pad();
-                scope.time.seconds = start.getSeconds().pad();
-                scope.time.isPM = isPM;
+				var parts = moment(start).format("h|mm|ss|a").split("|");
+                scope.time.hours = parts[0];
+                scope.time.minutes = parts[1];
+                scope.time.seconds = parts[2];
+                scope.time.isPM = parts[3] === "pm";
             });
             
             scope.ok = function() {
-                var date = new Date(), hours = parseInt(scope.time.hours);
-				if (scope.time.isPM)
-					hours += 12;
-				if (hours === 24)
-					hours = 12;
-				if (!scope.time.isPM && hours === 12)
-					hours = 0;
-                date.setHours(hours);
-                date.setMinutes(parseInt(scope.time.minutes));
-                date.setSeconds(parseInt(scope.time.seconds));
-                scope.start = date;
+                scope.start = moment(scope.time.hours + "|" + scope.time.minutes + "|" + scope.time.seconds + "|" + (scope.time.isPM ? "pm" : "am"), "h|mm|ss|a");
                 scope.visible = false;
             };
         }
@@ -607,15 +654,10 @@ Controller.create(app, "timer", {
         _getNext(++_seconds);
         
         scope.$watch("startTime", function(start) {
-			if (start === undefined || isNaN(start.getTime()))
+			if (start === undefined)
 				return;
 			
-			var first = new Date().getTime();
-			var second = start.getTime();
-			var difference = first - second;
-			var seconds = difference/1000;
-			
-            _seconds = Math.ceil((new Date().getTime() - start.getTime())/1000);
+            _seconds = Math.round(moment.duration(moment() - start).asSeconds());
             _getNext(++_seconds);
 			scope.timer = _next;
         });
@@ -628,7 +670,7 @@ Controller.create(app, "timer", {
         };
         
         scope.start = function() {
-            scope.startTime = new Date();
+            scope.startTime = moment();
             scope.timerVisible = true;
 			scope.paused = false;
             

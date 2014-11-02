@@ -6,7 +6,8 @@
 	"checkbox/checkbox",
 	"text/text",
     "modal/modal",
-    "time"
+    "time",
+    "calendar/calendar"
 ].forEach(function(location) {
 	require("directives/" + location);
 })

@@ -45,10 +45,10 @@ Controller.create(app, "timer", {
         _getNext(++_seconds);
         
         scope.$watch("startTime", function(start) {
-			if (start === undefined || isNaN(start.getTime()))
+			if (start === undefined)
 				return;
 			
-            _seconds = Math.round(moment.duration(new Date().getTime() - start.getTime()).asSeconds());
+            _seconds = Math.round(moment.duration(moment() - start).asSeconds());
             _getNext(++_seconds);
 			scope.timer = _next;
         });
@@ -61,7 +61,7 @@ Controller.create(app, "timer", {
         };
         
         scope.start = function() {
-            scope.startTime = new Date();
+            scope.startTime = moment();
             scope.timerVisible = true;
 			scope.paused = false;
             

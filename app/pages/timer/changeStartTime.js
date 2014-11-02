@@ -15,6 +15,7 @@ app.directive("changeStartTime", function() {
             scope.label = "";
 
             scope.time = {
+                day: moment(),
                 hours: "",
                 minutes: "",
                 seconds: "",

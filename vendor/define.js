@@ -15,5 +15,5 @@ require.define({
 	
 	"moment": function(require, exports, module) {
 		return module.exports = moment;
-	};
+	}
 });

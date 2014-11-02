@@ -1678,7 +1678,122 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #cccccc;
+  border: solid 1px #eeeeee;
+}
+.border-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hidden {
+  display: none !important;
+}
+.tile {
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
+  border-radius: 2px;
+  background: #ffffff;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.deleted {
+  opacity: 0.6;
+}
+calendar {
+  display: block;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  background: white;
+}
+calendar > div.header {
+  float: left;
+  width: 100%;
+  background: white;
+  height: 40px;
+}
+calendar > div.header > * {
+  height: 40px;
+  line-height: 40px !important;
+  display: inline-block;
+  vertical-align: middle;
+}
+calendar > div.header > i {
+  float: left;
+  width: 40px;
+  font-size: 1.125em;
+  font-weight: bold;
+  position: relative;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  padding: 0 12px;
+  cursor: pointer;
+}
+calendar > div.header > i.fa-angle-left {
+  text-align: left;
+}
+calendar > div.header > i.fa-angle-right {
+  text-align: right;
+  margin-left: -40px;
+}
+calendar > div.header > span {
+  float: left;
+  width: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  padding-left: 52px;
+  margin-left: -40px;
+  text-align: center;
+  padding-right: 40px;
+}
+calendar > div.week {
+  float: left;
+  width: 100%;
+  border-top: solid 1px #eeeeee;
+}
+calendar > div.week:first-child {
+  border-top: none;
+}
+calendar > div.week > span.day {
+  float: left;
+  width: 14.28571429%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border-left: solid 1px #eeeeee;
+  font-size: 0.75em;
+  text-align: center;
+  height: 30px;
+  line-height: 30px !important;
+  display: inline-block;
+  vertical-align: middle;
+  background: white;
+  cursor: pointer;
+}
+calendar > div.week > span.day:first-child {
+  border-left: none;
+}
+calendar > div.week > span.day.today {
+  background: #E3F2FF;
+}
+calendar > div.week > span.day.different-month {
+  color: #C0C0C0;
+}
+calendar > div.week > span.day.selected {
+  background: #2875c7;
+  color: white;
+}
+
+.shadow {
+  box-shadow: 0 2px 8px rgba(100, 100, 100, 0.4);
+}
+.dark-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+.border {
+  border: solid 1px #eeeeee;
 }
 .border-box {
   box-sizing: border-box;
@@ -1706,7 +1821,7 @@
 div.checkbox-container {
   float: left;
   width: 100%;
-  border-bottom: solid 1px #cccccc;
+  border-bottom: solid 1px #eeeeee;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   cursor: pointer;
@@ -1737,7 +1852,7 @@ div.checkbox-container > div.padded-wrapper > div.inner-checkbox-container > div
   -moz-box-sizing: border-box;
 }
 div.checkbox-container > div.padded-wrapper > div.inner-checkbox-container > div.square {
-  border: solid 1px #cccccc;
+  border: solid 1px #eeeeee;
 }
 div.checkbox-container > div.padded-wrapper > div.inner-checkbox-container > div.check {
   background: #2875c7;
@@ -1822,7 +1937,7 @@ div.checkbox-container.checked div.transclude > span {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #cccccc;
+  border: solid 1px #eeeeee;
 }
 .border-box {
   box-sizing: border-box;
@@ -1971,7 +2086,7 @@ dropdown > div.show > div.dropdown-list {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #cccccc;
+  border: solid 1px #eeeeee;
 }
 .border-box {
   box-sizing: border-box;
@@ -2084,7 +2199,7 @@ menu > div > menu-item:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #cccccc;
+  border: solid 1px #eeeeee;
 }
 .border-box {
   box-sizing: border-box;
@@ -2142,7 +2257,7 @@ menu-item > a > i {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #cccccc;
+  border: solid 1px #eeeeee;
 }
 .border-box {
   box-sizing: border-box;
@@ -2280,7 +2395,7 @@ profile-image > img {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #cccccc;
+  border: solid 1px #eeeeee;
 }
 .border-box {
   box-sizing: border-box;
@@ -2375,7 +2490,7 @@ text.error div.focus > div {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #cccccc;
+  border: solid 1px #eeeeee;
 }
 .border-box {
   box-sizing: border-box;
@@ -2399,6 +2514,11 @@ text.error div.focus > div {
 }
 .deleted {
   opacity: 0.6;
+}
+#change-start-time .content > calendar {
+  float: left;
+  width: 100%;
+  margin-bottom: 12px;
 }
 #change-start-time .content > text,
 #change-start-time .content > span {
@@ -2451,7 +2571,7 @@ text.error div.focus > div {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #cccccc;
+  border: solid 1px #eeeeee;
 }
 .border-box {
   box-sizing: border-box;
@@ -2553,7 +2673,7 @@ text.error div.focus > div {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #cccccc;
+  border: solid 1px #eeeeee;
 }
 .border-box {
   box-sizing: border-box;
@@ -2680,7 +2800,7 @@ select {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #cccccc;
+  border: solid 1px #eeeeee;
 }
 .border-box {
   box-sizing: border-box;
@@ -2756,7 +2876,7 @@ button[negative] {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 .border {
-  border: solid 1px #cccccc;
+  border: solid 1px #eeeeee;
 }
 .border-box {
   box-sizing: border-box;
